@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
 
 public class Capitolo1 implements Screen {
@@ -32,6 +34,8 @@ public class Capitolo1 implements Screen {
     Sprite png;
     BitmapFont font;
     Stage stage;
+    OrthographicCamera camera;
+
 
     // È SOLO UNA DEMO, LE FUNZIONALITÀ ANDRANNO IMPLEMENTATE COME CLASSI DI ATTORI E GRUPPI PERSONALIZZATI OLTRE CHE I MENÙ SARANNO DI INPUT PROCESSOR,
     //Negli screen avvengono solo le sequenze scriptate della storia per ogni capitolo
@@ -44,14 +48,20 @@ public class Capitolo1 implements Screen {
 
         final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        stage = new Stage(new ScreenViewport());
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, MyGdxGame.larghezza, MyGdxGame.altezza);
+
+        stage = new Stage(new StretchViewport(MyGdxGame.larghezza,MyGdxGame.altezza,camera));
         Gdx.input.setInputProcessor(stage);
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
 
 
         Image sfondo = new Image(new Texture(Gdx.files.internal("sfondo.png")));
+        sfondo.setHeight(Gdx.graphics.getHeight());
+        sfondo.setWidth(Gdx.graphics.getWidth());
         sfondo.setTouchable(Touchable.enabled);
+
 
         final Image pgTest = new Image(new Texture(Gdx.files.internal("test.png")));
         final Image door = new Image(new Texture(Gdx.files.internal("door.png")));

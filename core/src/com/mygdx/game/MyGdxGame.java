@@ -10,8 +10,8 @@ public class MyGdxGame extends Game {
 	public SpriteBatch batch;
 	public Texture img;
 	int x;
-	public static int altezza=900;
-	public static int larghezza=1200;
+	public final static int altezza=900;
+	public final static int larghezza=1200;
 	
 	@Override
 	public void create () {

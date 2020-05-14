@@ -79,6 +79,7 @@ public class Schermata implements Screen {
                     move.setPosition(x, y);
                     move.setDuration(2f);
                     pg.addAction(move);
+
                 }
 
 

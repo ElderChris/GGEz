@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
 
 public class SchermataIniziale implements Screen {
@@ -36,6 +38,7 @@ public class SchermataIniziale implements Screen {
     Sprite bottone;
     Stage stage;
     TextField spaziotesto;
+    OrthographicCamera camera;
 
     //usare il Table e mettere in ordine gli elementi della GUI
     public SchermataIniziale(final MyGdxGame partita){
@@ -49,7 +52,12 @@ public class SchermataIniziale implements Screen {
 
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
         //creo il "palcoscenico" grande quanto tutto lo schermo
-        stage = new Stage(new ScreenViewport());
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, MyGdxGame.larghezza, MyGdxGame.altezza);
+
+       // ScreenViewport view=new();
+        stage = new Stage(new StretchViewport(MyGdxGame.larghezza,MyGdxGame.altezza,camera));
         //lo imposto come gestore di input (per far cliccare bottoni eccetera)
         Gdx.input.setInputProcessor(stage);
 
@@ -61,13 +69,13 @@ public class SchermataIniziale implements Screen {
 
         TextButton textButton = new TextButton("GIOCA",mySkin2);
         textButton.setPosition(500,500);
+
         Label label = new Label("Inserisci il nome giocatore",mySkin2);
         label.setPosition(50,250);
 
 
         textButton.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y,int pointer,int button){
-
 
 
                 nomegiocatore= spaziotesto.getText();
