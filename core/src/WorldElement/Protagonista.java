@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 
 
-public class Protagonista extends Actor  {
+public class Protagonista extends Image  {
     Texture texture;
     Sprite sprite;
     public String nomegiocatore;
@@ -41,48 +41,18 @@ public class Protagonista extends Actor  {
 
         //protagonista si muove quando clicca su oggetti e personaggi
 
-        //non ha senso, funziona solo quando clicci il protagonista
-      this.addCaptureListener(new InputListener(){
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-
-                    MoveToAction move = new MoveToAction();
-                    move.setPosition(x, y);
-                    move.setDuration(2f);
-                    Protagonista.this.addAction(move);
-
-
-
-                return true;
-            }
-        });
-
 
 
     }
 
+    @Override
+    public void setSize(float width, float height) {
+        super.setSize(width, height);
+    }
 
     @Override
     public void act(float delta) {
-        //non ha senso, da cancellare
-        this.addCaptureListener(new InputListener(){
 
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-
-                MoveToAction move = new MoveToAction();
-                move.setPosition(x, y);
-                move.setDuration(2f);
-                Protagonista.this.addAction(move);
-
-
-
-                return true;
-            }
-        });
 
 
     }

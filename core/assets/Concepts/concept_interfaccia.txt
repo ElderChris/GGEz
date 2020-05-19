@@ -1,0 +1,9 @@
+il box è sempre visibile nel gioco con scritto solamente "inventario"
+
+al click su oggetti interagibili, a seconda dell'oggetto compare "Osserva" "Raccogli" "Usa"
+
+quasi ogni oggetto del gioco è Osservabile ma non tutto è Raccoglibile o Usabile  (una porta è usabile per spostarsi ma non raccoglibile)
+
+cliccando su Inventario nel box scompare ogni bottone e si vedono da destra verso sinistra le icone degli oggetti raccolti (ogni oggetto raccoglibile possiede una descrizione e un icona)
+
+infine sempre in inventario compare l'opzione Combina, i prossimi 2 click sulle icone decidono gli oggetti candidati, se va a buon fine si aggiunge l'oggetto combinato nell'inventario se no appare messaggio Label

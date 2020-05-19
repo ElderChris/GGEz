@@ -111,9 +111,12 @@ public class SchermataIniziale implements Screen {
         //mette il colore dello sfondo
         Gdx.gl.glClearColor(0.2f,0.2f,0.3f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+
+        //LA PARTE DI SOTTO NON LA USEREMO PERCHÈ LO FA GIà  lo stage
         //inizia a visualizzare texture immagini eccetera
    /*     partita.batch.begin();
 
