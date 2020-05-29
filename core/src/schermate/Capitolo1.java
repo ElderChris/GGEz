@@ -1,25 +1,22 @@
 package schermate;
 
 import Azioni.Menu;
+import WorldElement.Interazione;
 import WorldElement.Protagonista;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
@@ -33,11 +30,12 @@ public class Capitolo1 implements Screen {
     public Texture img;
     public Texture texture1;
     public TextButton prova;
-    public String stringaPorta,stringaComodino,stringaLetto;
+
     Sprite png;
     BitmapFont font;
   public Stage stage;
     OrthographicCamera camera;
+    InputMultiplexer multiplexer;
 
     final float WORLD_WIDTH = 100;
     final float WORLD_HEIGHT = 75;
@@ -46,16 +44,16 @@ public class Capitolo1 implements Screen {
     // È SOLO UNA DEMO, LE FUNZIONALITÀ ANDRANNO IMPLEMENTATE COME CLASSI DI ATTORI E GRUPPI PERSONALIZZATI OLTRE CHE I MENÙ SARANNO DI INPUT PROCESSOR,
     //Negli screen avvengono solo le sequenze scriptate della storia per ogni capitolo
 
-    //cose da fare 1) cambiare mySKin come nel video
+    //cose da fare 1)
     //                creare il Group menù e il Group Scene (ogni livello ha una scena) in Capitolo1 c'è solo enigma e cutscene
     //                menù con inventario, e azioni
     //                le azioni del menù devono essere più generali possibile quindi si applicano su qualsiasi oggetto
     public Capitolo1(MyGdxGame partita,String nomegiocatore){
         this.partita=partita;
 
-        stringaPorta="è una porta";
-        stringaComodino="è un comodino";
-        stringaLetto= "è un letto";
+        String stringaPorta="è una porta";
+        String stringaComodino="è un comodino";
+        String stringaLetto= "è un letto";
 
         final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         final float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
@@ -64,126 +62,121 @@ public class Capitolo1 implements Screen {
         camera.setToOrtho(false, WORLD_WIDTH/2, WORLD_HEIGHT/2);
 
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
-        Gdx.input.setInputProcessor(stage);
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
 
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("sfondo.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("camera_ospedale_base.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
 
-        final Image pgTest = new Image(new Texture(Gdx.files.internal("test.png")));
-        pgTest.setSize(13,18);
+     final   Protagonista pgTest = new Protagonista(nomegiocatore,new Texture("bimbo.png"));
+        pgTest.setSize(23,28);
 
-        final Image door = new Image(new Texture(Gdx.files.internal("door.png")));
+
+        //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
+
+        Interazione door = new Interazione(new Texture(Gdx.files.internal("door.png")),"la stupida porta di camera mia","non si apre",new Texture(Gdx.files.internal("reactionConfusion.png")),new Texture(Gdx.files.internal("reactionNeutral.png")));
         door.setSize(13,22);
-        //door.setBounds(); //provare a usare il setBounds al posto del SetSize
-        final Image comodino = new Image(new Texture(Gdx.files.internal("comodino.png")));
-        comodino.setSize(11,14);
-        final Image letto=new Image(new Texture(Gdx.files.internal("letto.png")));
-        letto.setSize(23,10);
+        door.setSize(9,17);
+
+
+        Interazione comodino = new Interazione("È un comodino brutto",new Texture(Gdx.files.internal("kermit.png")),new Texture(Gdx.files.internal("reactionAngry.png")),new Texture(Gdx.files.internal("reactionSurprised.png")),"hey ho trovato una chiave");
+        comodino.setSize(18,23);
+
+
+
+
+        Interazione letto = new Interazione(new Texture(Gdx.files.internal("letto.png"))," il mio letto...  ","ho già dormito abbastanza ",new Texture(Gdx.files.internal("reactionNeutral.png")),new Texture(Gdx.files.internal("reactionHappy.png")));
+        letto.setSize(40,24);
+
+
 
         door.setPosition(3,20);
-
         comodino.setPosition(43,23);
+        letto.setPosition(66,17);
+        pgTest.setPosition(65,17);
 
-        letto.setPosition(66,10);
 
-        pgTest.setPosition(30,30);
+        final Group scena = new Group();
+
+        scena.addActor(door);
+        scena.addActor(comodino);
+        scena.addActor(letto);
+        scena.addActor(pgTest);
         pgTest.setTouchable(Touchable.disabled);
 
-        final Group interazioni = new Group();
 
-        interazioni.addActor(door);
-        interazioni.addActor(comodino);
-        interazioni.addActor(letto);
-        interazioni.addActor(pgTest);
 
-        //da fixare
-        final Protagonista pg = new Protagonista("lollo");
-        pg.setSize(1,1);
 
    //     final Dialog dialog= new Dialog("Benvenuto "+nomegiocatore,mySkin2);
    //     dialog.setSize(3,3);
-        final Dialog portaDialog= new Dialog(stringaPorta,mySkin2);
+   /*     final Dialog portaDialog= new Dialog(stringaPorta,mySkin2);
         portaDialog.setSize(3,3);
         final Dialog comodinoDialog = new Dialog(stringaComodino,mySkin2);
         comodinoDialog.setSize(3,3);
         final Dialog lettoDialog = new Dialog(stringaLetto,mySkin2);
         lettoDialog.setSize(3,3);
-
+*/
+   /*
         Timer.schedule(new Timer.Task(){
             public void run(){
-    //            dialog.hide();
+                dialog.hide();
             }
 
         },2);
+*/
+       final Menu menu = new Menu();
 
-  /*      final TextButton usa = new TextButton("Usa",mySkin2);
-        usa.setVisible(false);
-        usa.setScale(3,3);
-        final TextButton osserva = new TextButton("Osserva",mySkin2);
-        osserva.setVisible(false);
-        osserva.setScale(3,3);
-        final  TextButton raccogli = new TextButton("Raccogli",mySkin2);
-        raccogli.setVisible(false);
-  */
-
-
-        interazioni.addCaptureListener(new InputListener(){
+        scena.addCaptureListener(new InputListener(){
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                Gdx.app.log("Mouse Event","Click at " + x + "," + y);
+             //   Gdx.app.log("Mouse Event","Click at " + x + "," + y);
                 Vector3 worldCoordinates = camera.unproject(new Vector3(x,y,0));
-                Gdx.app.log("Mouse Event","Projected at " + worldCoordinates.x + "," + worldCoordinates.y);
+            //    Gdx.app.log("Mouse Event","Projected at " + worldCoordinates.x + "," + worldCoordinates.y);
 
-              //  usa.setPosition(worldCoordinates.x,worldCoordinates.y);
-               // raccogli.setPosition(x+50,y+50);
-               // osserva.setPosition(x, y-100);
-
-
-
+                    /*
                     MoveToAction move = new MoveToAction();
                     move.setPosition(x,y);
                     move.setDuration(2f);
                     pgTest.addAction(move);
-
+                    */
                   //  Vector2 coord = stage.screenToStageCoordinates(new Vector2(x, y))
-                    Actor hit= interazioni.hit(x,y,false);
+
+                    //ATTENZIONE potrebbe crashare per colpa di  "java.lang.ClassCastException: WorldElement.Protagonista cannot be cast to WorldElement.Interazione" ,
+                    //SOLUZIONI: da mettere l'eccezione o si risolverà quando cambio il modo di movimento del personaggio oppure togliere il personaggio dal Group
+                Interazione hit = null;
+                try {
+                     hit = (Interazione) scena.hit(x, y, false); //hit rappresenta l'attore selezionato con un click
+                }catch (Exception ClassCastException){ }
 
                     if (hit!=null){
-                        Gdx.app.log("Mouse Event","Click at " + x + "," + y);
+
+
+                        menu.selezionaInterazione(hit);
+
+                        Gdx.app.log(" attore test ",hit.getName());
+
                     }
 
-
-
-
-
-                return true;
+                return false;
             }
         });
 
-        Menu menu = new Menu();
 
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(menu.stage);
+        Gdx.input.setInputProcessor(multiplexer);
 
         stage.addActor(sfondo);
 
-        stage.addActor(interazioni);
-      //  stage.addActor(pgTest);
+        stage.addActor(scena);
 
-
-        stage.addActor(menu); //perchè il protagonista scompare?
-
-     //   stage.addActor(usa);
-     //   stage.addActor(raccogli);
-     //   stage.addActor(osserva);
-
-
-      //  dialog.show(stage);
+        stage.addActor(menu);
 
 
     }

@@ -56,7 +56,7 @@ public class Schermata implements Screen {
 
         stage = new Stage(new ScreenViewport());
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
-       final Protagonista pg = new Protagonista("pippo");
+
 
 
         Gdx.input.setInputProcessor(stage);
@@ -78,7 +78,7 @@ public class Schermata implements Screen {
                     MoveToAction move = new MoveToAction();
                     move.setPosition(x, y);
                     move.setDuration(2f);
-                    pg.addAction(move);
+
 
                 }
 
@@ -93,7 +93,7 @@ public class Schermata implements Screen {
 
         Group gruppo = new Group(); //contiene gli oggetti della scena, da trasferire tutto in Capitolo1.Java
         stage.addActor(dialog);
-        stage.addActor(pg);
+
 
     }
     @Override

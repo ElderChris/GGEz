@@ -16,27 +16,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 
 
 public class Protagonista extends Image  {
-    Texture texture;
     Sprite sprite;
     public String nomegiocatore;
 
 
+
     public void draw(Batch batch, float parentAlpha){
-        batch.draw( sprite,getX(),getY());
+        ((TextureRegionDrawable)getDrawable()).draw(batch,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight()
+                ,getScaleX(),getScaleY(),getRotation());
+
+
     }
 
-    public Protagonista(String nomegiocatore){
-        texture= new Texture("test2.png");
+    public Protagonista(String nomegiocatore,Texture texture){
+        super(texture);
         sprite = new Sprite((texture));
+        this.setTouchable(Touchable.disabled);
 
 
-        setBounds(sprite.getX(),sprite.getY(),sprite.getWidth(),sprite.getHeight());
+        setBounds(getX(),getY(),getWidth(),getHeight());
 
 
         //protagonista si muove quando clicca su oggetti e personaggi
@@ -45,14 +50,10 @@ public class Protagonista extends Image  {
 
     }
 
-    @Override
-    public void setSize(float width, float height) {
-        super.setSize(width, height);
-    }
 
     @Override
     public void act(float delta) {
-
+    super.act(delta);
 
 
     }
