@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 //creare bottoni che si attiveranno ad ogni attore cliccato, saranno tutti in un group
 public class Menu extends Group  implements InputProcessor {
   public   Stage stage;
-    String string= " questa è una stringa di prova";
-    String stringOgg= "questa è una stringa di prova2";
+
+
    private Group menu;
     private Image reaction;
     private Image inventarioButton;
@@ -22,12 +22,16 @@ public class Menu extends Group  implements InputProcessor {
     private Image raccogliButton;
     private Image usaButton;
     private Image combinaButton;
+    private Image box;
 
     private Label label;
     private Label labelOgg;
 
+    private int i=0;
+
 
     private  Interazione interazioneSelezionata;
+    private String[] stringaSelezionata;
 
     final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
     public Menu(){
@@ -37,7 +41,8 @@ public class Menu extends Group  implements InputProcessor {
         stage = new Stage();
 
 
-        Image box = new Image(new Texture(Gdx.files.internal("box.png")));
+
+         box = new Image(new Texture(Gdx.files.internal("box.png")));
 
          inventarioButton = new Image(new Texture(Gdx.files.internal("inventario.png")));
 
@@ -49,9 +54,9 @@ public class Menu extends Group  implements InputProcessor {
 
          combinaButton = new Image(new Texture(Gdx.files.internal("combina.png")));
 
-         label = new Label(string,mySkin2);
+         label = new Label(" ",mySkin2);
 
-         labelOgg = new Label(stringOgg,mySkin2);
+         labelOgg = new Label(" ",mySkin2);
 
         menu = new Group();
 
@@ -66,6 +71,7 @@ public class Menu extends Group  implements InputProcessor {
         menu.addActor(combinaButton);
 
         box.setPosition(15,1);
+        box.setTouchable(Touchable.disabled);
         inventarioButton.setPosition(600,140);
         osservaButton.setPosition(800,140);
         osservaButton.setVisible(false);
@@ -156,13 +162,23 @@ public class Menu extends Group  implements InputProcessor {
             }
         });
 
-
+        //area grigia
         box.addCaptureListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 //fai andare avanti il dialogo
-
                 Gdx.app.log(" bottone test ","hai cliccato il box dei dialoghi");
+
+
+               scorriDiscorso(stringaSelezionata,i);
+               System.out.println("indice prima: "+ i);
+               if(i<stringaSelezionata.length)
+               i++;
+               else i=0;
+                System.out.println("indice dopo: "+ i);
+
+
+
 
                 return false;
             }
@@ -178,6 +194,8 @@ public class Menu extends Group  implements InputProcessor {
         interazioneSelezionata= interazione;
 
 
+
+        box.setTouchable(Touchable.disabled);
 
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
@@ -227,8 +245,11 @@ public class Menu extends Group  implements InputProcessor {
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
 
-        label.setText(interazioneSelezionata.stringaOsserva);
+
+        label.setText(interazioneSelezionata.stringaOsserva[0]);
         label.setVisible(true);
+        stringaSelezionata=interazioneSelezionata.stringaOsserva;
+
         reaction = new Image(interazioneSelezionata.getReactionFaceOsserva());
 
         mostraReazione(reaction);
@@ -240,14 +261,17 @@ public class Menu extends Group  implements InputProcessor {
         menu.addActor(reaction);
         reaction.setPosition(30,30);
         reaction.setVisible(true);
+        box.setTouchable(Touchable.enabled);
 
     }
 
     public void raccogli(Interazione interazioneSelezionata){
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
-        label.setText(interazioneSelezionata.stringaRaccogli);
+        label.setText(interazioneSelezionata.stringaRaccogli[0]);
         label.setVisible(true);
+        stringaSelezionata=interazioneSelezionata.stringaRaccogli;
+
         reaction = new Image(interazioneSelezionata.getReactionFaceRaccogli());
 
         mostraReazione(reaction);
@@ -258,12 +282,19 @@ public class Menu extends Group  implements InputProcessor {
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
 
-        label.setText(interazioneSelezionata.stringaUsa);
+        label.setText(interazioneSelezionata.stringaUsa[0]);
         label.setVisible(true);
+        stringaSelezionata=interazioneSelezionata.stringaUsa;
+
         reaction = new Image(interazioneSelezionata.getReactionFaceUsa());
 
         mostraReazione(reaction);
+    }
 
+    public void scorriDiscorso(String[] stringa,int i){
+                if(i+1<stringa.length)
+                label.setText(stringa[i+1]);
+                else label.setText(stringa[0]);
     }
 
     @Override

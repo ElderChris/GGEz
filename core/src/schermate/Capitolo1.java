@@ -51,16 +51,44 @@ public class Capitolo1 implements Screen {
     public Capitolo1(MyGdxGame partita,String nomegiocatore){
         this.partita=partita;
 
-        String stringaPorta="è una porta";
-        String stringaComodino="è un comodino";
-        String stringaLetto= "è un letto";
+        Texture portaTexture = new Texture(Gdx.files.internal("door.png"));
+        Texture comodinoTexture = new Texture(Gdx.files.internal("kermit.png"));
+        Texture lettoTexture = new Texture(Gdx.files.internal("letto.png"));
 
+        Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionSad.png"));
+        Texture reactionNeutralTexture = new Texture(Gdx.files.internal("reactionNeutral.png"));
+        Texture reactionAngryTexture = new Texture(Gdx.files.internal("reactionScared.png"));
+        Texture reactionSurprisedTexture = new Texture(Gdx.files.internal("reactionSurprised.png"));
+        Texture reactionHappyTexture = new Texture(Gdx.files.internal("reactionHappy.png"));
+
+
+
+
+
+        String[] stringaOsservaPorta = new String[]  {"quella è la mia porta.." ,"bho...", "c'è nessuno?"};
+        String[] stringaOsservaComodino = new String[] {"il comodino...","è un bel comodino...","c'è il pupazzo di kermit"};
+        String[] stringaOsservaLetto = new String[] {"il mio letto...","a che ora mi sono svegliato?..."," vabbè  "};
+
+        String[] stringaOsservaPorta1 = new String[]  {" osserva porta 1" ," osserva porta 2", " osserva porta 3"};
+        String[] stringaOsservaComodino1 = new String[] {" osserva comodino 1"," osserva comodino 2"," osserva comodino 3"};
+        String[] stringaOsservaLetto1 = new String[] {"osserva letto 1.","osserva letto 2"," osserva letto 3  "};
+
+        //stringhe per debugging
+        String[] stringaUsaPorta1 = new String[]  {" usa porta 1" ," usa porta 2", " usa porta 3","usa porta 4"};
+        String[] stringaRaccogliComodino1 = new String[] {" raccogli comodino 1"," raccolgi comodino 2"};
+        String[] stringaUsaLetto1 = new String[] {"usa letto 1.","usa letto 2"," usa letto 3  "};
+
+
+        String[] stringaUsaPorta = new String[]  {"non si apre..." ,"è chiusa a chiave...", "la chiave sarà in giro"};
+        String[] stringaRaccogliComodino = new String[] {"vediamo cosa c'è qui...","ho trovato la chiave!",};
+        String[] stringaUsaLetto = new String[] {"...","non ho molto sonno..."," ho dormito abbastanza  "};
+
+        //utilizzo il json per caricare il font
         final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         final float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera(25*aspectRatio,25);
         camera.setToOrtho(false, WORLD_WIDTH/2, WORLD_HEIGHT/2);
-
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
@@ -77,18 +105,19 @@ public class Capitolo1 implements Screen {
 
         //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
 
-        Interazione door = new Interazione(new Texture(Gdx.files.internal("door.png")),"la stupida porta di camera mia","non si apre",new Texture(Gdx.files.internal("reactionConfusion.png")),new Texture(Gdx.files.internal("reactionNeutral.png")));
+        Interazione door = new Interazione(portaTexture,stringaOsservaPorta1,stringaUsaPorta1,reactionConfusedTexture,reactionNeutralTexture);
         door.setSize(13,22);
         door.setSize(9,17);
 
 
-        Interazione comodino = new Interazione("È un comodino brutto",new Texture(Gdx.files.internal("kermit.png")),new Texture(Gdx.files.internal("reactionAngry.png")),new Texture(Gdx.files.internal("reactionSurprised.png")),"hey ho trovato una chiave");
+
+        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionAngryTexture,reactionSurprisedTexture,stringaRaccogliComodino1);
         comodino.setSize(18,23);
 
 
 
 
-        Interazione letto = new Interazione(new Texture(Gdx.files.internal("letto.png"))," il mio letto...  ","ho già dormito abbastanza ",new Texture(Gdx.files.internal("reactionNeutral.png")),new Texture(Gdx.files.internal("reactionHappy.png")));
+        Interazione letto = new Interazione(lettoTexture,stringaOsservaLetto1,stringaUsaLetto1,reactionNeutralTexture,reactionHappyTexture);
         letto.setSize(40,24);
 
 

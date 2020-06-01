@@ -13,10 +13,10 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     //da rendere privati?
     public Texture texture;
     public Sprite sprite;
-    public String stringaOsserva; //ogni interazione è osservabile
+    public String[] stringaOsserva; //ogni interazione è osservabile
     public String descrizioneInventario;
-    public String stringaUsa;
-    public String stringaRaccogli;
+    public String[] stringaUsa;
+    public String[] stringaRaccogli;
 
     public boolean usabile;
     public boolean raccoglibileContenitore; //da usare per gli oggetti come armadi,comodini che per esempio contengono altri oggetti
@@ -27,7 +27,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
 
     //costruzione interazione personalizzata
-    public Interazione(Texture texture, String stringaOsserva, String stringaUsa, String stringaRaccogli, String descrizioneInventario, boolean usabile,
+    public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizioneInventario, boolean usabile,
                        boolean raccoglibileContenitore, boolean raccoglibile,Texture reactionFaceOsserva, Texture reactionFaceRaccogli, Texture reactionFaceUsa) {
         super(texture);
         this.stringaOsserva = stringaOsserva;
@@ -46,7 +46,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
     //interazione dove l'utente può premere 'usa' (bottoni, porte...)
-    public Interazione(Texture texture,String stringaOsserva,String stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
+    public Interazione(Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
         super(texture);
         this.stringaOsserva=stringaOsserva;
         this.reactionFaceOsserva = reactionFaceOsserva;
@@ -61,7 +61,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
     //interazione dove l'utente può premere 'raccogli'(oggetti rimuovibili dalla scena)
-    public Interazione(Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String stringaOsserva, String stringaRaccogli){
+    public Interazione(Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaOsserva, String[] stringaRaccogli){
         super(texture);
         this.stringaOsserva=stringaOsserva;
         this.stringaRaccogli=stringaRaccogli;
@@ -75,7 +75,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
     //interazione dove l'utente può premere 'raccogli' (contenitori, armadi..)
-    public Interazione(String stringaOsserva, Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String stringaRaccogli){
+    public Interazione(String[] stringaOsserva, Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaRaccogli){
         super(texture);
         this.reactionFaceOsserva = reactionFaceOsserva;
         this.reactionFaceRaccogli = reactionFaceRaccogli;
@@ -89,6 +89,14 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
     }
 
+
+    //per debug
+    public Interazione(String[] array){
+        System.out.println(array[0]);
+        System.out.println(array[1]);
+        System.out.println(array[2]);
+
+    }
 
 
     //fare classe per gli oggetti quelli dell'inventario (è sempre un custom actor che disegna la sua icona nell'inventario
@@ -140,11 +148,11 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
         this.reactionFaceRaccogli = reactionFaceRaccogli;
     }
 
-    public String getStringaOsserva() {
+    public String[] getStringaOsserva() {
         return stringaOsserva;
     }
 
-    public void setStringaOsserva(String stringaOsserva) {
+    public void setStringaOsserva(String[] stringaOsserva) {
         this.stringaOsserva = stringaOsserva;
     }
 
@@ -157,19 +165,19 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
         this.descrizioneInventario = descrizioneInventario;
     }
 
-    public String getStringaUsa() {
+    public String[] getStringaUsa() {
         return stringaUsa;
     }
 
-    public void setStringaUsa(String stringaUsa) {
+    public void setStringaUsa(String[] stringaUsa) {
         this.stringaUsa = stringaUsa;
     }
 
-    public String getStringaRaccogli() {
+    public String[] getStringaRaccogli() {
         return stringaRaccogli;
     }
 
-    public void setStringaRaccogli(String stringaRaccogli) {
+    public void setStringaRaccogli(String[] stringaRaccogli) {
         this.stringaRaccogli = stringaRaccogli;
     }
 
