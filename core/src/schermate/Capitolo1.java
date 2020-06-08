@@ -2,6 +2,7 @@ package schermate;
 
 import Azioni.Menu;
 import WorldElement.Interazione;
+import WorldElement.Oggetto;
 import WorldElement.Protagonista;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -41,13 +42,13 @@ public class Capitolo1 implements Screen {
     final float WORLD_HEIGHT = 75;
 
 
-    // È SOLO UNA DEMO, LE FUNZIONALITÀ ANDRANNO IMPLEMENTATE COME CLASSI DI ATTORI E GRUPPI PERSONALIZZATI OLTRE CHE I MENÙ SARANNO DI INPUT PROCESSOR,
+
     //Negli screen avvengono solo le sequenze scriptate della storia per ogni capitolo
 
     //cose da fare 1)
     //                creare il Group menù e il Group Scene (ogni livello ha una scena) in Capitolo1 c'è solo enigma e cutscene
     //                menù con inventario, e azioni
-    //                le azioni del menù devono essere più generali possibile quindi si applicano su qualsiasi oggetto
+
     public Capitolo1(MyGdxGame partita,String nomegiocatore){
         this.partita=partita;
 
@@ -60,6 +61,8 @@ public class Capitolo1 implements Screen {
         Texture reactionAngryTexture = new Texture(Gdx.files.internal("reactionScared.png"));
         Texture reactionSurprisedTexture = new Texture(Gdx.files.internal("reactionSurprised.png"));
         Texture reactionHappyTexture = new Texture(Gdx.files.internal("reactionHappy.png"));
+
+        Texture keyIcon = new Texture(Gdx.files.internal("key.png"));
 
 
 
@@ -105,13 +108,15 @@ public class Capitolo1 implements Screen {
 
         //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
 
+        Oggetto chiave = new Oggetto(keyIcon,"è una chiave",false);
+
         Interazione door = new Interazione(portaTexture,stringaOsservaPorta1,stringaUsaPorta1,reactionConfusedTexture,reactionNeutralTexture);
         door.setSize(13,22);
         door.setSize(9,17);
 
 
 
-        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionAngryTexture,reactionSurprisedTexture,stringaRaccogliComodino1);
+        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionAngryTexture,reactionSurprisedTexture,stringaRaccogliComodino1,chiave);
         comodino.setSize(18,23);
 
 
@@ -163,9 +168,9 @@ public class Capitolo1 implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-             //   Gdx.app.log("Mouse Event","Click at " + x + "," + y);
+
                 Vector3 worldCoordinates = camera.unproject(new Vector3(x,y,0));
-            //    Gdx.app.log("Mouse Event","Projected at " + worldCoordinates.x + "," + worldCoordinates.y);
+
 
                     /*
                     MoveToAction move = new MoveToAction();
@@ -186,6 +191,9 @@ public class Capitolo1 implements Screen {
 
 
                         menu.selezionaInterazione(hit);
+
+                        if(menu.isRimuovibile(hit))
+                            scena.removeActor(hit);
 
                         Gdx.app.log(" attore test ",hit.getName());
 

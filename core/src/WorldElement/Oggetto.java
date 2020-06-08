@@ -16,14 +16,28 @@ import com.mygdx.game.MyGdxGame;
 
 public class Oggetto extends Image {
 
-public Texture icon;
-public String descrizione;
-public boolean combinabile;
+private Texture icon;
+private String descrizione;
+private int idCombinazione; //se l'id è uguale allora si possono combinare
+private boolean combinabile;
+private boolean combinato; //per far sparire gli oggetti che hai usato per combinare
+private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati per la combinazione
 
+                //pensare alla questionee della ricerca degli oggetti e controllo sugli oggetti già raccolti (disattivi tasto raccogli)
+
+    //oggetto classico,
     public Oggetto(Texture icon, String descrizione,boolean combinabile) {
         super(icon);
         this.descrizione=descrizione;
         this.combinabile=combinabile;
+        selezionato=false;
+        setBounds(getX(),getY(),getWidth(),getHeight());
+    }
+
+    //oggetto frutto di una combinazione
+    public Oggetto(Texture icon, String descrizione,Oggetto oggetto1, Oggetto oggetto2){
+        super(icon);
+        this.descrizione = descrizione;
         setBounds(getX(),getY(),getWidth(),getHeight());
     }
 
@@ -44,6 +58,32 @@ public boolean combinabile;
 
 
     //GETTER AND SETTER
+
+
+    public int getIdCombinazione() {
+        return idCombinazione;
+    }
+
+    public void setIdCombinazione(int idCombinazione) {
+        this.idCombinazione = idCombinazione;
+    }
+
+    public boolean isCombinato() {
+        return combinato;
+    }
+
+    public void setCombinato(boolean combinato) {
+        this.combinato = combinato;
+    }
+
+    public boolean isSelezionato() {
+        return selezionato;
+    }
+
+    public void setSelezionato(boolean selezionato) {
+        this.selezionato = selezionato;
+    }
+
     public String getDescrizione() {
         return descrizione;
     }
@@ -59,4 +99,6 @@ public boolean combinabile;
     public void setCombinabile(boolean combinabile) {
         this.combinabile = combinabile;
     }
+
+
 }

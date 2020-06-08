@@ -4,27 +4,32 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-// vedere bene la documentazione per gli attori / Image
 public class Interazione extends Image { //meglio extends Actor oppure Image?
 
-    //da rendere privati?
-    public Texture texture;
-    public Sprite sprite;
-    public String[] stringaOsserva; //ogni interazione è osservabile
-    public String descrizioneInventario;
-    public String[] stringaUsa;
-    public String[] stringaRaccogli;
+    private Texture texture;
+    private Sprite sprite;
+    private String[] stringaOsserva; //ogni interazione è osservabile
+    private String descrizioneInventario;
+    private String[] stringaUsa;
+    private String[] stringaRaccogli;
+    private String[] stringaParla;
 
-    public boolean usabile;
-    public boolean raccoglibileContenitore; //da usare per gli oggetti come armadi,comodini che per esempio contengono altri oggetti
-    public boolean raccoglibile; //da usare per gli oggetti che possono essere presi e rimossi dalla scena come il pallone del capitolo 2.
-    public Texture reactionFaceOsserva;
+    private boolean usabile;
+    private boolean raccoglibileContenitore; //da usare per gli oggetti come armadi,comodini che per esempio contengono altri oggetti
+    private boolean raccoglibile; //da usare per gli oggetti che possono essere presi e rimossi dalla scena come il pallone del capitolo 2.
+    private Texture reactionFaceOsserva;
     private Texture reactionFaceUsa;
     private Texture reactionFaceRaccogli;
+    private Texture reactionFaceParla;
+    private Oggetto oggetto;
 
+    private boolean rimuovibile; //se vero, il suo oggetto interno è stato raccolto e ora l'interazione può essere rimosso dalla scena
+    private boolean raccolto; //se vero, il suo oggetto inteerno è stato raccolto e ora non più possibile rifare 'raccogli'
+    private boolean npc; //se vero, allora rappresenta un personaggio non giocante
 
     //costruzione interazione personalizzata
     public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizioneInventario, boolean usabile,
@@ -61,7 +66,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
     //interazione dove l'utente può premere 'raccogli'(oggetti rimuovibili dalla scena)
-    public Interazione(Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaOsserva, String[] stringaRaccogli){
+    public Interazione(Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaOsserva, String[] stringaRaccogli,Oggetto oggetto){
         super(texture);
         this.stringaOsserva=stringaOsserva;
         this.stringaRaccogli=stringaRaccogli;
@@ -70,12 +75,15 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
         raccoglibile=true;
         usabile=false;
         raccoglibileContenitore=false;
+        this.oggetto=oggetto;
+        rimuovibile=false;
+
         this.setName("raccoglibile");
 
     }
 
     //interazione dove l'utente può premere 'raccogli' (contenitori, armadi..)
-    public Interazione(String[] stringaOsserva, Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaRaccogli){
+    public Interazione(String[] stringaOsserva, Texture texture, Texture reactionFaceOsserva, Texture reactionFaceRaccogli, String[] stringaRaccogli,Oggetto oggetto){
         super(texture);
         this.reactionFaceOsserva = reactionFaceOsserva;
         this.reactionFaceRaccogli = reactionFaceRaccogli;
@@ -84,23 +92,20 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
         raccoglibileContenitore=true;
         usabile=false;
         raccoglibile=false;
+        this.oggetto=oggetto;
+        raccolto=false;
+
         this.setName("contenitore");
 
+    }
+    //costruttore per i personaggi, con loro è disponibile solo il tasto parla, il giocatore può ricevere / consegnare oggetti ai personaggi (per puzzle)
+    public Interazione(Texture texture,Texture reactionFace ,String[] stringaParla){
+        super(texture);
+        this.stringaParla=stringaParla;
+        this.reactionFaceParla=reactionFace;
+        this.stringaParla=stringaParla;
 
     }
-
-
-    //per debug
-    public Interazione(String[] array){
-        System.out.println(array[0]);
-        System.out.println(array[1]);
-        System.out.println(array[2]);
-
-    }
-
-
-    //fare classe per gli oggetti quelli dell'inventario (è sempre un custom actor che disegna la sua icona nell'inventario
-
 
 
     @Override
@@ -127,6 +132,30 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
     //GETTER AND SETTER
 
+
+    public boolean isRaccolto() {
+        return raccolto;
+    }
+
+    public void setRaccolto(boolean raccolto) {
+        this.raccolto = raccolto;
+    }
+
+    public boolean isRimuovibile() {
+        return rimuovibile;
+    }
+
+    public void setRimuovibile(boolean rimuovibile) {
+        this.rimuovibile = rimuovibile;
+    }
+
+    public void setOggetto(Oggetto oggetto){
+        this.oggetto=oggetto;
+    }
+
+    public Oggetto getOggetto(){
+        return oggetto;
+    }
 
     public void setTexture(Texture texture) {
         this.texture = texture;

@@ -1,6 +1,7 @@
 package Azioni;
 
 import WorldElement.Interazione;
+import WorldElement.Oggetto;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +10,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.Iterator;
+
+import static Azioni.Inventario.getLista;
+
+
+
+
 
 //creare bottoni che si attiveranno ad ogni attore cliccato, saranno tutti in un group
 public class Menu extends Group  implements InputProcessor {
@@ -26,12 +37,18 @@ public class Menu extends Group  implements InputProcessor {
 
     private Label label;
     private Label labelOgg;
+    private Label tutorial;
+    private TextButton testButton;
+    private Label labelTest;
 
     private int i=0;
+    private int cont=0;
 
 
     private  Interazione interazioneSelezionata;
     private String[] stringaSelezionata;
+
+    private Table table; //capire come funziona
 
     final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
     public Menu(){
@@ -40,8 +57,30 @@ public class Menu extends Group  implements InputProcessor {
 
         stage = new Stage();
 
+        table = new Table(mySkin2); //usato per mostrare l'inventario
+       table.setWidth(700);
+       table.setHeight(150);
+        table.align(Align.top|Align.left);
+        table.setPosition(25,10);
+        table.setVisible(false);
+        table.padLeft(5);
 
 
+        //per debug
+        //table.debugTable();
+        //table.debug();
+        //table.debugAll();
+
+
+      /*DA FARE: far sparire gli oggetti raccolti dalla scena (FATTO, da testare)
+                  -trovare il modo di far modificare i parametri dell'oggetto cliccato e non alla sua copia
+
+                    -finire di implementare l'interazione con gli NPC (aggiungi bottone parla, consegna?)
+
+                 -sistema di combinazione degli oggetti(IN CORSO)
+
+                 -sistema di puzzle che cerca l'oggetto nella lista e sblocca porte
+       */
          box = new Image(new Texture(Gdx.files.internal("box.png")));
 
          inventarioButton = new Image(new Texture(Gdx.files.internal("inventario.png")));
@@ -58,6 +97,14 @@ public class Menu extends Group  implements InputProcessor {
 
          labelOgg = new Label(" ",mySkin2);
 
+
+         Image testTable = new Image(new Texture(Gdx.files.internal("key.png")));
+         Image testTable2 = new Image(new Texture(Gdx.files.internal("key.png")));
+
+
+
+
+
         menu = new Group();
 
 
@@ -69,6 +116,7 @@ public class Menu extends Group  implements InputProcessor {
         menu.addActor(raccogliButton);
         menu.addActor(usaButton);
         menu.addActor(combinaButton);
+        menu.addActor(table);
 
         box.setPosition(15,1);
         box.setTouchable(Touchable.disabled);
@@ -82,22 +130,19 @@ public class Menu extends Group  implements InputProcessor {
         usaButton.setPosition(800,30);
         usaButton.setVisible(false);
 
-        combinaButton.setPosition(500,90);
+        combinaButton.setPosition(750,90);
         combinaButton.setVisible(false);
 
         label.setPosition(200,80);
         label.setFontScale(0.6f);
         label.setVisible(false);
 
-       labelOgg.setPosition(150,30);
+       labelOgg.setPosition(400,30);
        labelOgg.setFontScale(0.5f);
        labelOgg.setVisible(false);
 
+
         stage.addActor(menu);
-
-
-
-
 
 
         //qui creo i listener dei singoli bottoni
@@ -120,6 +165,14 @@ public class Menu extends Group  implements InputProcessor {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 Gdx.app.log(" bottone test","hai cliccato combina");
+
+                combinaButton.setVisible(false);
+                labelOgg.setVisible(true);
+                labelOgg.setText("Clicca su due oggetti per combinarli");
+                //metodo che prende 2 input, ovvero i prossimi 2 oggetti cliccati, li controlla se sono combinabili
+                //se si ,vede se corrispondono ad un oggetto frutto di combinazione grazie agli ID,
+                //se si, rimuove quegli oggetti e fa comparire il nuovo oggetto nell'inventario
+
 
 
 
@@ -176,8 +229,24 @@ public class Menu extends Group  implements InputProcessor {
                i++;
                else i=0;
                 System.out.println("indice dopo: "+ i);
+                
+
+                return false;
+            }
+        });
+
+        table.addCaptureListener(new InputListener(){
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Oggetto hit = null;
+                hit = (Oggetto) table.hit(x, y, false); //hit rappresenta l'attore selezionato con un click
+                if(hit != null){
 
 
+                    labelOgg.setText(hit.getDescrizione());
+                    labelOgg.setVisible(true);
+                }
 
 
                 return false;
@@ -187,6 +256,7 @@ public class Menu extends Group  implements InputProcessor {
 
 
     }
+    //ATTENZIONE: mi permette di cambiare gli stati degli oggetti? da vedere nei livelli successivi
     //Si salva una copia dell'oggetto e crea il menù a seconda dell'oggetto interagibile
     public void selezionaInterazione(Interazione interazione){
 
@@ -196,6 +266,9 @@ public class Menu extends Group  implements InputProcessor {
 
 
         box.setTouchable(Touchable.disabled);
+        raccogliButton.setTouchable(Touchable.enabled);
+        usaButton.setTouchable(Touchable.enabled);
+        osservaButton.setTouchable(Touchable.enabled);
 
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
@@ -214,6 +287,10 @@ public class Menu extends Group  implements InputProcessor {
         if(interazione.isUsabile())
             usaButton.setVisible(true);
         else usaButton.setVisible(false);
+
+        if(interazione.isRaccolto())
+            raccogliButton.setVisible(false);
+        else raccogliButton.setVisible(true);
 
         if(interazione.isRaccoglibile())
             raccogliButton.setVisible(true);
@@ -234,10 +311,14 @@ public class Menu extends Group  implements InputProcessor {
         if(reaction!=null)
             reaction.setVisible(false);
 
+        table.setVisible(true);
+
     }
 
     public void nascondiInventario(){
         combinaButton.setVisible(false);
+        table.setVisible(false);
+        labelOgg.setVisible(false);
         //verrà nascosta pure la group o la table degli oggetti
     }
 
@@ -246,12 +327,13 @@ public class Menu extends Group  implements InputProcessor {
             menu.removeActor(reaction);
 
 
-        label.setText(interazioneSelezionata.stringaOsserva[0]);
+        label.setText(interazioneSelezionata.getStringaOsserva()[0]);
         label.setVisible(true);
-        stringaSelezionata=interazioneSelezionata.stringaOsserva;
+        stringaSelezionata=interazioneSelezionata.getStringaOsserva();
 
         reaction = new Image(interazioneSelezionata.getReactionFaceOsserva());
 
+        osservaButton.setTouchable(Touchable.disabled);
         mostraReazione(reaction);
     }
 
@@ -268,12 +350,27 @@ public class Menu extends Group  implements InputProcessor {
     public void raccogli(Interazione interazioneSelezionata){
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
-        label.setText(interazioneSelezionata.stringaRaccogli[0]);
+        label.setText(interazioneSelezionata.getStringaRaccogli()[0]);
         label.setVisible(true);
-        stringaSelezionata=interazioneSelezionata.stringaRaccogli;
+        stringaSelezionata=interazioneSelezionata.getStringaRaccogli();
 
         reaction = new Image(interazioneSelezionata.getReactionFaceRaccogli());
 
+        //qui aggiungi l'oggetto alla lista
+        getLista().add(cont,interazioneSelezionata.getOggetto());
+        //e va aggiunto alla table
+          table.add(getLista().get(cont)).padRight(15);
+          cont++;
+
+
+
+          if(interazioneSelezionata.isRaccoglibile())
+              interazioneSelezionata.setRimuovibile(true);
+          if(interazioneSelezionata.isRaccolto())
+              interazioneSelezionata.setRaccolto(true);
+
+
+        raccogliButton.setTouchable(Touchable.disabled);
         mostraReazione(reaction);
 
     }
@@ -282,19 +379,26 @@ public class Menu extends Group  implements InputProcessor {
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
 
-        label.setText(interazioneSelezionata.stringaUsa[0]);
+        label.setText(interazioneSelezionata.getStringaUsa()[0]);
         label.setVisible(true);
-        stringaSelezionata=interazioneSelezionata.stringaUsa;
+        stringaSelezionata=interazioneSelezionata.getStringaUsa();
 
         reaction = new Image(interazioneSelezionata.getReactionFaceUsa());
 
+        usaButton.setTouchable(Touchable.disabled);
         mostraReazione(reaction);
+
     }
 
     public void scorriDiscorso(String[] stringa,int i){
                 if(i+1<stringa.length)
                 label.setText(stringa[i+1]);
                 else label.setText(stringa[0]);
+    }
+
+    public boolean isRimuovibile(Interazione interazioneSelezionata){
+
+    return interazioneSelezionata.isRimuovibile();
     }
 
     @Override

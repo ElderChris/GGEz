@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 
-//personaggi non giocanti, se cliccati disegnano array di stringhe, mostrano la loro faccia(con più reazioni?) associate alla stringa e il menù cambia, con loro è disponibile solo il comando "parla"
+//personaggi non giocanti,  con loro è disponibile solo il comando "parla"
 public class Personaggi extends Image {
 
     public String dialogo[];
