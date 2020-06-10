@@ -67,19 +67,25 @@ public class Menu extends Group  implements InputProcessor {
 
 
         //per debug
-        //table.debugTable();
-        //table.debug();
-        //table.debugAll();
+        table.debugTable();
+        table.debug();
+        table.debugAll();
 
 
       /*DA FARE: far sparire gli oggetti raccolti dalla scena (FATTO, da testare)
+
+                X CAPITOLO 1     -Sistema di puzzle che cerca l'oggetto nella lista e sblocca porte (serve idOggetto che identifica l'ogg e idCOmbinazione per combinarli)
+
                   -trovare il modo di far modificare i parametri dell'oggetto cliccato e non alla sua copia
 
-                    -finire di implementare l'interazione con gli NPC (aggiungi bottone parla, consegna?)
+               X CAPITOLO2     -finire di implementare l'interazione con gli NPC (aggiungi bottone parla, consegna?)
 
-                 -sistema di combinazione degli oggetti(IN CORSO)
+               X CAPITOLO2  -sistema di combinazione degli oggetti(IN CORSO)
 
-                 -sistema di puzzle che cerca l'oggetto nella lista e sblocca porte
+
+
+                 >)FINISCI CAPITOLO1
+                            scrivi testo, finisci ambientazione, sistema oggetti,
        */
          box = new Image(new Texture(Gdx.files.internal("box.png")));
 

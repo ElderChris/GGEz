@@ -19,6 +19,7 @@ public class Oggetto extends Image {
 private Texture icon;
 private String descrizione;
 private int idCombinazione; //se l'id è uguale allora si possono combinare
+    private String nome; //
 private boolean combinabile;
 private boolean combinato; //per far sparire gli oggetti che hai usato per combinare
 private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati per la combinazione
