@@ -78,7 +78,7 @@ public class Menu extends Group  implements InputProcessor {
 
                   -trovare il modo di far modificare i parametri dell'oggetto cliccato e non alla sua copia
 
-               X CAPITOLO2     -finire di implementare l'interazione con gli NPC (aggiungi bottone parla, consegna?)
+               X CAPITOLO2     -finire di implementare l'interazione con gli NPC (aggiungi bottone parla)
 
                X CAPITOLO2  -sistema di combinazione degli oggetti(IN CORSO)
 

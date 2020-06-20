@@ -18,8 +18,8 @@ public class Oggetto extends Image {
 
 private Texture icon;
 private String descrizione;
-private int idCombinazione; //se l'id è uguale allora si possono combinare
-    private String nome; //
+private String idCombinazione; //se l'id è uguale allora si possono combinare
+private String idPuzzle;
 private boolean combinabile;
 private boolean combinato; //per far sparire gli oggetti che hai usato per combinare
 private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati per la combinazione
@@ -35,7 +35,7 @@ private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati p
         setBounds(getX(),getY(),getWidth(),getHeight());
     }
 
-    //oggetto frutto di una combinazione
+    //oggetto frutto di una combinazione (forse non è una buona idea)
     public Oggetto(Texture icon, String descrizione,Oggetto oggetto1, Oggetto oggetto2){
         super(icon);
         this.descrizione = descrizione;
@@ -61,11 +61,19 @@ private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati p
     //GETTER AND SETTER
 
 
-    public int getIdCombinazione() {
+    public String getIdPuzzle() {
+        return idPuzzle;
+    }
+
+    public void setIdPuzzle(String idPuzzle) {
+        this.idPuzzle = idPuzzle;
+    }
+
+    public String getIdCombinazione() {
         return idCombinazione;
     }
 
-    public void setIdCombinazione(int idCombinazione) {
+    public void setIdCombinazione(String idCombinazione) {
         this.idCombinazione = idCombinazione;
     }
 

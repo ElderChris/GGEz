@@ -43,11 +43,6 @@ public class Capitolo1 implements Screen {
 
 
 
-    //Negli screen avvengono solo le sequenze scriptate della storia per ogni capitolo
-
-    //cose da fare 1)
-    //                creare il Group menù e il Group Scene (ogni livello ha una scena) in Capitolo1 c'è solo enigma e cutscene
-    //                menù con inventario, e azioni
 
     public Capitolo1(MyGdxGame partita,String nomegiocatore){
         this.partita=partita;
@@ -109,10 +104,11 @@ public class Capitolo1 implements Screen {
         //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
 
         Oggetto chiave = new Oggetto(keyIcon,"è una chiave",false);
+        chiave.setIdPuzzle("key");
 
         Interazione door = new Interazione(portaTexture,stringaOsservaPorta1,stringaUsaPorta1,reactionConfusedTexture,reactionNeutralTexture);
-        door.setSize(13,22);
-        door.setSize(9,17);
+        door.setSize(16,26.6f);
+
 
 
 
@@ -127,7 +123,7 @@ public class Capitolo1 implements Screen {
 
 
 
-        door.setPosition(3,20);
+        door.setPosition(7.75f,22.7f);
         comodino.setPosition(43,23);
         letto.setPosition(66,17);
         pgTest.setPosition(65,17);
@@ -194,6 +190,7 @@ public class Capitolo1 implements Screen {
 
                         if(menu.isRimuovibile(hit))
                             scena.removeActor(hit);
+
 
                         Gdx.app.log(" attore test ",hit.getName());
 

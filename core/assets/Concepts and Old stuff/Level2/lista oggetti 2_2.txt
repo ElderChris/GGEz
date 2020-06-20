@@ -1,0 +1,9 @@
+insegna
+
+stradina verso montagna, (bloccata dal puzzle, se viene restituito al bimbo il pallone, si potrà usare la stradina per cambiare livello)
+
+albero gigante,
+
+pallone,
+
+cumulo roccie
