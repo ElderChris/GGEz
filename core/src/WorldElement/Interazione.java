@@ -49,7 +49,17 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
 
     }
+    //interazione SOLO osservabile
+    public Interazione(Texture texture,String [] stringaOsserva,Texture reactionFaceOsserva){
+        super(texture);
+        this.stringaOsserva=stringaOsserva;
+        this.reactionFaceOsserva=reactionFaceOsserva;
+        usabile=false;
+        raccoglibile=false;
+        raccoglibileContenitore=false;
 
+
+    }
     //interazione dove l'utente può premere 'usa' (bottoni, porte...)
     public Interazione(Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
         super(texture);

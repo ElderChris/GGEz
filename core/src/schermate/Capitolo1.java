@@ -47,39 +47,44 @@ public class Capitolo1 implements Screen {
     public Capitolo1(MyGdxGame partita,String nomegiocatore){
         this.partita=partita;
 
+        //inizializzazione texture
         Texture portaTexture = new Texture(Gdx.files.internal("door.png"));
         Texture comodinoTexture = new Texture(Gdx.files.internal("kermit.png"));
         Texture lettoTexture = new Texture(Gdx.files.internal("letto.png"));
+        Texture orologioTexture = new Texture(Gdx.files.internal("orologio.png"));
 
-        Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionSad.png"));
+        Texture reactionSadTexture = new Texture(Gdx.files.internal("reactionSad.png"));
         Texture reactionNeutralTexture = new Texture(Gdx.files.internal("reactionNeutral.png"));
-        Texture reactionAngryTexture = new Texture(Gdx.files.internal("reactionScared.png"));
+        Texture reactionScaredTexture = new Texture(Gdx.files.internal("reactionScared.png"));
         Texture reactionSurprisedTexture = new Texture(Gdx.files.internal("reactionSurprised.png"));
         Texture reactionHappyTexture = new Texture(Gdx.files.internal("reactionHappy.png"));
+        Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionConfused.png"));
 
         Texture keyIcon = new Texture(Gdx.files.internal("key.png"));
 
 
 
 
-
-        String[] stringaOsservaPorta = new String[]  {"quella è la mia porta.." ,"bho...", "c'è nessuno?"};
+        //inizializzazione Stringhe per interazioni
+        String[] stringaOsservaPorta = new String[]  {"quella è la mia porta.." ,"bho...", "c'è nessuno?",};
         String[] stringaOsservaComodino = new String[] {"il comodino...","è un bel comodino...","c'è il pupazzo di kermit"};
         String[] stringaOsservaLetto = new String[] {"il mio letto...","a che ora mi sono svegliato?..."," vabbè  "};
+        String[] stringaOsservaOrologio = new String[] {"ciao"};
 
+        String[] stringaUsaPorta = new String[]  {"non si apre..." ,"è chiusa a chiave...", "la chiave sarà in giro"};
+        String[] stringaRaccogliComodino = new String[] {"vediamo cosa c'è qui...","ho trovato la chiave!",};
+        String[] stringaUsaLetto = new String[] {"...","non ho molto sonno..."," ho dormito abbastanza  "};
+
+
+        //stringhe per debugging
         String[] stringaOsservaPorta1 = new String[]  {" osserva porta 1" ," osserva porta 2", " osserva porta 3"};
         String[] stringaOsservaComodino1 = new String[] {" osserva comodino 1"," osserva comodino 2"," osserva comodino 3"};
         String[] stringaOsservaLetto1 = new String[] {"osserva letto 1.","osserva letto 2"," osserva letto 3  "};
-
-        //stringhe per debugging
         String[] stringaUsaPorta1 = new String[]  {" usa porta 1" ," usa porta 2", " usa porta 3","usa porta 4"};
         String[] stringaRaccogliComodino1 = new String[] {" raccogli comodino 1"," raccolgi comodino 2"};
         String[] stringaUsaLetto1 = new String[] {"usa letto 1.","usa letto 2"," usa letto 3  "};
 
 
-        String[] stringaUsaPorta = new String[]  {"non si apre..." ,"è chiusa a chiave...", "la chiave sarà in giro"};
-        String[] stringaRaccogliComodino = new String[] {"vediamo cosa c'è qui...","ho trovato la chiave!",};
-        String[] stringaUsaLetto = new String[] {"...","non ho molto sonno..."," ho dormito abbastanza  "};
 
         //utilizzo il json per caricare il font
         final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
@@ -106,14 +111,16 @@ public class Capitolo1 implements Screen {
         Oggetto chiave = new Oggetto(keyIcon,"è una chiave",false);
         chiave.setIdPuzzle("key");
 
+        //creazione interazioni e inizializzazione dimensioni
+
         Interazione door = new Interazione(portaTexture,stringaOsservaPorta1,stringaUsaPorta1,reactionConfusedTexture,reactionNeutralTexture);
         door.setSize(16,26.6f);
 
 
 
 
-        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionAngryTexture,reactionSurprisedTexture,stringaRaccogliComodino1,chiave);
-        comodino.setSize(18,23);
+        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionConfusedTexture,reactionSurprisedTexture,stringaRaccogliComodino1,chiave);
+        comodino.setSize(20,25.3f);
 
 
 
@@ -123,13 +130,20 @@ public class Capitolo1 implements Screen {
 
 
 
+        Interazione orologio = new Interazione(orologioTexture,stringaOsservaOrologio,reactionConfusedTexture);
+
+
+        //imposto posizioni interazioni
+
         door.setPosition(7.75f,22.7f);
-        comodino.setPosition(43,23);
+        comodino.setPosition(26.95f,18.3f);
         letto.setPosition(66,17);
         pgTest.setPosition(65,17);
 
 
         final Group scena = new Group();
+
+        //aggiungo interazioni alla scena
 
         scena.addActor(door);
         scena.addActor(comodino);
