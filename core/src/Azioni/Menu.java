@@ -126,17 +126,17 @@ public class Menu extends Group  implements InputProcessor {
 
         box.setPosition(15,1);
         box.setTouchable(Touchable.disabled);
-        inventarioButton.setPosition(600,140);
-        osservaButton.setPosition(800,140);
+        inventarioButton.setPosition(600,142);
+        osservaButton.setPosition(800,142);
         osservaButton.setVisible(false);
 
-        raccogliButton.setPosition(800,90);
+        raccogliButton.setPosition(800,92);
         raccogliButton.setVisible(false);
 
-        usaButton.setPosition(800,30);
+        usaButton.setPosition(800,32);
         usaButton.setVisible(false);
 
-        combinaButton.setPosition(750,90);
+        combinaButton.setPosition(750,92);
         combinaButton.setVisible(false);
 
         label.setPosition(200,80);
