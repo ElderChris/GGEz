@@ -1,5 +1,6 @@
 package schermate;
 
+import Azioni.Puzzle;
 import Azioni.Menu;
 import WorldElement.Interazione;
 import WorldElement.Oggetto;
@@ -44,7 +45,7 @@ public class Capitolo1 implements Screen {
 
 
 
-    public Capitolo1(MyGdxGame partita,String nomegiocatore){
+    public Capitolo1(final MyGdxGame partita, final String nomegiocatore){
         this.partita=partita;
 
         //inizializzazione texture
@@ -109,7 +110,7 @@ public class Capitolo1 implements Screen {
                                                             "sanità pubblica... paghi le\n" +
                                                             "tasse per gli orologi rotti",
 
-                                                        "Sono sicuro che continuera\n" +
+                                                        "Sono sicuro che continuerà\n" +
                                                             "a segnare lo stesso orario\n" +
                                                             "per il resto della sua vita"};
 
@@ -167,8 +168,7 @@ public class Capitolo1 implements Screen {
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
 
-
-        Image sfondo = new Image(new Texture(Gdx.files.internal("camera_ospedale_base.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("camera_ospedale.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
@@ -178,14 +178,16 @@ public class Capitolo1 implements Screen {
 
 
         //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
+        //Settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
         Oggetto chiave = new Oggetto(keyIcon,"Chiave",false);
         chiave.setIdPuzzle("key");
         Oggetto lettera = new Oggetto(letterIcon,"Lettera riservata",false);
+        lettera.setIdPuzzle("X");
 
         //creazione interazioni e inizializzazione dimensioni
 
-        Interazione door = new Interazione(portaTexture,stringaOsservaPorta,stringaUsaPorta,reactionConfusedTexture,reactionSadTexture);
+        Interazione door = new Interazione("door",portaTexture,stringaOsservaPorta,stringaUsaPorta,reactionConfusedTexture,reactionSadTexture);
         door.setSize(16,26.6f);
 
 
@@ -197,7 +199,7 @@ public class Capitolo1 implements Screen {
 
 
 
-        Interazione letto = new Interazione(lettoTexture,stringaOsservaLetto,stringaUsaLetto,reactionNeutralTexture,reactionNeutralTexture);
+        Interazione letto = new Interazione("bed",lettoTexture,stringaOsservaLetto,stringaUsaLetto,reactionNeutralTexture,reactionNeutralTexture);
         letto.setSize(40.2f,25);
 
 
@@ -257,7 +259,8 @@ public class Capitolo1 implements Screen {
 
         },2);
 */
-       final Menu menu = new Menu();
+       final Menu menu = new Menu(1, partita);
+
 
         scena.addCaptureListener(new InputListener(){
 
@@ -285,7 +288,7 @@ public class Capitolo1 implements Screen {
 
                     if (hit!=null){
 
-
+                        //Controllo risoluzione del puzzle del capitolo
                         menu.selezionaInterazione(hit);
 
                         if(menu.isRimuovibile(hit))

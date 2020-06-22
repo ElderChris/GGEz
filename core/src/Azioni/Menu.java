@@ -1,5 +1,7 @@
 package Azioni;
 
+import com.mygdx.game.MyGdxGame;
+import schermate.Capitolo1;
 import WorldElement.Interazione;
 import WorldElement.Oggetto;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import schermate.Capitolo2;
+import schermate.SchermataIniziale;
 
 import java.util.Iterator;
 
@@ -24,7 +28,7 @@ import static Azioni.Inventario.getLista;
 //creare bottoni che si attiveranno ad ogni attore cliccato, saranno tutti in un group
 public class Menu extends Group  implements InputProcessor {
   public   Stage stage;
-
+  public int capitoloAttuale;
 
    private Group menu;
     private Image reaction;
@@ -44,17 +48,18 @@ public class Menu extends Group  implements InputProcessor {
     private int i=0;
     private int cont=0;
 
-
+    private MyGdxGame partita;
     private  Interazione interazioneSelezionata;
     private String[] stringaSelezionata;
+    final Puzzle puzzle = new Puzzle();
 
     private Table table; //capire come funziona
 
     final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-    public Menu(){
-
+    public Menu(int capitoloAttuale, MyGdxGame partita){
+        this.partita=partita;
+        this.capitoloAttuale = capitoloAttuale;
         //funzionamento del menù: clicci un oggetto interaggibile, viene evidenziato,vengono lette le informazioni dell'oggetto, viene mostrato il menù con i bottoni giusti
-
         stage = new Stage();
 
         table = new Table(mySkin2); //usato per mostrare l'inventario
@@ -259,16 +264,11 @@ public class Menu extends Group  implements InputProcessor {
             }
         });
 
-
-
     }
     //ATTENZIONE: mi permette di cambiare gli stati degli oggetti? da vedere nei livelli successivi
     //Si salva una copia dell'oggetto e crea il menù a seconda dell'oggetto interagibile
     public void selezionaInterazione(Interazione interazione){
-
-
         interazioneSelezionata= interazione;
-
 
 
         box.setTouchable(Touchable.disabled);
@@ -290,9 +290,9 @@ public class Menu extends Group  implements InputProcessor {
         inventarioButton.setVisible(true);
         osservaButton.setVisible(true);
 
-        if(interazione.isUsabile())
+        if(interazione.isUsabile()) {
             usaButton.setVisible(true);
-        else usaButton.setVisible(false);
+        }else usaButton.setVisible(false);
 
         if(interazione.isRaccolto())
             raccogliButton.setVisible(false);
@@ -381,19 +381,22 @@ public class Menu extends Group  implements InputProcessor {
 
     }
 
-    public void usa(Interazione interazioneSelezionata){
-        if(menu.findActor("reaction")!=null)
+    public void usa(Interazione interazioneSelezionata) {
+
+        if (puzzle.selezionaPuzzle(capitoloAttuale, interazioneSelezionata))
+            nextLevel();
+
+        if (menu.findActor("reaction") != null)
             menu.removeActor(reaction);
 
         label.setText(interazioneSelezionata.getStringaUsa()[0]);
         label.setVisible(true);
-        stringaSelezionata=interazioneSelezionata.getStringaUsa();
+        stringaSelezionata = interazioneSelezionata.getStringaUsa();
 
         reaction = new Image(interazioneSelezionata.getReactionFaceUsa());
 
         usaButton.setTouchable(Touchable.disabled);
         mostraReazione(reaction);
-
     }
 
     public void scorriDiscorso(String[] stringa,int i){
@@ -405,6 +408,11 @@ public class Menu extends Group  implements InputProcessor {
     public boolean isRimuovibile(Interazione interazioneSelezionata){
 
     return interazioneSelezionata.isRimuovibile();
+    }
+
+    public void nextLevel(){
+        partita.setScreen(new Capitolo2(partita));
+        stage.dispose();
     }
 
     @Override

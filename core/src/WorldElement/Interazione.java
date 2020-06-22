@@ -13,7 +13,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     private Texture texture;
     private Sprite sprite;
     private String[] stringaOsserva; //ogni interazione è osservabile
-    private String descrizioneInventario;
+    private String descrizione;
     private String[] stringaUsa;
     private String[] stringaRaccogli;
     private String[] stringaParla;
@@ -32,11 +32,11 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     private boolean npc; //se vero, allora rappresenta un personaggio non giocante
 
     //costruzione interazione personalizzata
-    public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizioneInventario, boolean usabile,
+    public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizione, boolean usabile,
                        boolean raccoglibileContenitore, boolean raccoglibile,Texture reactionFaceOsserva, Texture reactionFaceRaccogli, Texture reactionFaceUsa) {
         super(texture);
         this.stringaOsserva = stringaOsserva;
-        this.descrizioneInventario=descrizioneInventario;
+        this.descrizione=descrizione;
         this.stringaUsa=stringaUsa;
         this.stringaRaccogli=stringaRaccogli;
         this.usabile=usabile;
@@ -61,8 +61,9 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
     }
     //interazione dove l'utente può premere 'usa' (bottoni, porte...)
-    public Interazione(Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
+    public Interazione(String descrizione,Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
         super(texture);
+        this.descrizione=descrizione;
         this.stringaOsserva=stringaOsserva;
         this.reactionFaceOsserva = reactionFaceOsserva;
         this.reactionFaceUsa=reactionFaceUsa;
@@ -196,12 +197,12 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
 
-    public String getDescrizioneInventario() {
-        return descrizioneInventario;
+    public String getDescrizione() {
+        return descrizione;
     }
 
-    public void setDescrizioneInventario(String descrizioneInventario) {
-        this.descrizioneInventario = descrizioneInventario;
+    public void setDescrizione(String descrizioneInventario) {
+        this.descrizione = descrizioneInventario;
     }
 
     public String[] getStringaUsa() {
