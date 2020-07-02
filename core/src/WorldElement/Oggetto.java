@@ -23,24 +23,21 @@ private String idPuzzle;
 private boolean combinabile;
 private boolean combinato; //per far sparire gli oggetti che hai usato per combinare
 private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati per la combinazione
+    private boolean raccolto;
 
-                //pensare alla questionee della ricerca degli oggetti e controllo sugli oggetti già raccolti (disattivi tasto raccogli)
+
 
     //oggetto classico,
-    public Oggetto(Texture icon, String descrizione,boolean combinabile) {
+    public Oggetto(Texture icon, String descrizione,String idPuzzle,String idCombinazione,boolean raccolto) {
         super(icon);
         this.descrizione=descrizione;
-        this.combinabile=combinabile;
+        this.idPuzzle=idPuzzle;
+        this.idCombinazione=idCombinazione;
+        this.raccolto=raccolto;
         selezionato=false;
         setBounds(getX(),getY(),getWidth(),getHeight());
     }
 
-    //oggetto frutto di una combinazione (forse non è una buona idea)
-    public Oggetto(Texture icon, String descrizione,Oggetto oggetto1, Oggetto oggetto2){
-        super(icon);
-        this.descrizione = descrizione;
-        setBounds(getX(),getY(),getWidth(),getHeight());
-    }
 
 
 
@@ -59,6 +56,14 @@ private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati p
 
 
     //GETTER AND SETTER
+
+    public boolean isRaccolto() {
+        return raccolto;
+    }
+
+    public void setRaccolto(boolean raccolto) {
+        this.raccolto = raccolto;
+    }
 
 
     public String getIdPuzzle() {

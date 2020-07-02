@@ -8,15 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class Interazione extends Image { //meglio extends Actor oppure Image?
+public class Interazione extends Image {
 
     private Texture texture;
     private Sprite sprite;
     private String[] stringaOsserva; //ogni interazione è osservabile
-    private String descrizioneInventario;
+    private String descrizione;
     private String[] stringaUsa;
     private String[] stringaRaccogli;
     private String[] stringaParla;
+    private String[] stringaPuzzleRisolto; //stringa che comunicano i personaggi dopo aver sbloccato un puzzle
 
     private boolean usabile;
     private boolean raccoglibileContenitore; //da usare per gli oggetti come armadi,comodini che per esempio contengono altri oggetti
@@ -25,6 +26,7 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     private Texture reactionFaceUsa;
     private Texture reactionFaceRaccogli;
     private Texture reactionFaceParla;
+    private Texture reactionFaceParlaPuzzleRisolto;
     private Oggetto oggetto;
 
     private boolean rimuovibile; //se vero, il suo oggetto interno è stato raccolto e ora l'interazione può essere rimosso dalla scena
@@ -32,11 +34,11 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     private boolean npc; //se vero, allora rappresenta un personaggio non giocante
 
     //costruzione interazione personalizzata
-    public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizioneInventario, boolean usabile,
+    public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizione, boolean usabile,
                        boolean raccoglibileContenitore, boolean raccoglibile,Texture reactionFaceOsserva, Texture reactionFaceRaccogli, Texture reactionFaceUsa) {
         super(texture);
         this.stringaOsserva = stringaOsserva;
-        this.descrizioneInventario=descrizioneInventario;
+        this.descrizione=descrizione;
         this.stringaUsa=stringaUsa;
         this.stringaRaccogli=stringaRaccogli;
         this.usabile=usabile;
@@ -61,8 +63,9 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
     }
     //interazione dove l'utente può premere 'usa' (bottoni, porte...)
-    public Interazione(Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
+    public Interazione(String descrizione,Texture texture,String[] stringaOsserva,String[] stringaUsa,Texture reactionFaceOsserva, Texture reactionFaceUsa){
         super(texture);
+        this.descrizione=descrizione;
         this.stringaOsserva=stringaOsserva;
         this.reactionFaceOsserva = reactionFaceOsserva;
         this.reactionFaceUsa=reactionFaceUsa;
@@ -109,11 +112,13 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
     }
     //costruttore per i personaggi, con loro è disponibile solo il tasto parla, il giocatore può ricevere / consegnare oggetti ai personaggi (per puzzle)
-    public Interazione(Texture texture,Texture reactionFace ,String[] stringaParla){
+    public Interazione(Texture texture,Texture reactionFace,Texture reactionFaceParlaPuzzleRisolto ,String[] stringaParla, String[] stringaPuzzleRisolto){
         super(texture);
         this.stringaParla=stringaParla;
         this.reactionFaceParla=reactionFace;
         this.stringaParla=stringaParla;
+        this.stringaPuzzleRisolto=stringaPuzzleRisolto;
+        this.reactionFaceParlaPuzzleRisolto= reactionFaceParlaPuzzleRisolto;
 
     }
 
@@ -141,6 +146,42 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
 
 
     //GETTER AND SETTER
+
+    public Interazione getInterazione(){
+        return this;
+    }
+
+    public String[] getStringaParla() {
+        return stringaParla;
+    }
+
+    public void setStringaParla(String[] stringaParla) {
+        this.stringaParla = stringaParla;
+    }
+
+    public String[] getStringaPuzzleRisolto() {
+        return stringaPuzzleRisolto;
+    }
+
+    public void setStringaPuzzleRisolto(String[] stringaPuzzleRisolto) {
+        this.stringaPuzzleRisolto = stringaPuzzleRisolto;
+    }
+
+    public Texture getReactionFaceParla() {
+        return reactionFaceParla;
+    }
+
+    public void setReactionFaceParla(Texture reactionFaceParla) {
+        this.reactionFaceParla = reactionFaceParla;
+    }
+
+    public boolean isNpc() {
+        return npc;
+    }
+
+    public void setNpc(boolean npc) {
+        this.npc = npc;
+    }
 
 
     public boolean isRaccolto() {
@@ -196,12 +237,12 @@ public class Interazione extends Image { //meglio extends Actor oppure Image?
     }
 
 
-    public String getDescrizioneInventario() {
-        return descrizioneInventario;
+    public String getDescrizione() {
+        return descrizione;
     }
 
-    public void setDescrizioneInventario(String descrizioneInventario) {
-        this.descrizioneInventario = descrizioneInventario;
+    public void setDescrizione(String descrizioneInventario) {
+        this.descrizione = descrizioneInventario;
     }
 
     public String[] getStringaUsa() {

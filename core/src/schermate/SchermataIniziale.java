@@ -29,7 +29,7 @@ public class SchermataIniziale implements Screen {
     Texture texture1;
     Texture playButton;
     SpriteBatch batch;
-    TextListener listener = new TextListener();
+
     BitmapFont font;
     public String nomegiocatore="";
     MyGdxGame partita;

@@ -35,7 +35,7 @@ public class Protagonista extends Image  {
 
     }
 
-    public Protagonista(String nomegiocatore,Texture texture){
+    public Protagonista(Texture texture){
         super(texture);
         sprite = new Sprite((texture));
         this.setTouchable(Touchable.disabled);

@@ -1,5 +1,6 @@
 package schermate;
 
+import Azioni.Puzzle;
 import Azioni.Menu;
 import WorldElement.Interazione;
 import WorldElement.Oggetto;
@@ -32,7 +33,7 @@ public class Capitolo1 implements Screen {
     public Texture texture1;
     public TextButton prova;
 
-    Sprite png;
+
     BitmapFont font;
   public Stage stage;
     OrthographicCamera camera;
@@ -44,14 +45,19 @@ public class Capitolo1 implements Screen {
 
 
 
-    public Capitolo1(MyGdxGame partita,String nomegiocatore){
+    public Capitolo1(final MyGdxGame partita, final String nomegiocatore){
         this.partita=partita;
 
         //inizializzazione texture
+
+        Image sfondo = new Image(new Texture(Gdx.files.internal("camera_ospedale.png")));
+
         Texture portaTexture = new Texture(Gdx.files.internal("door.png"));
         Texture comodinoTexture = new Texture(Gdx.files.internal("kermit.png"));
         Texture lettoTexture = new Texture(Gdx.files.internal("letto.png"));
         Texture orologioTexture = new Texture(Gdx.files.internal("orologio.png"));
+        Texture finestraTexture = new Texture(Gdx.files.internal("finestra.png"));
+        Texture cartellinaTexture = new Texture(Gdx.files.internal("cartellina.png"));
 
         Texture reactionSadTexture = new Texture(Gdx.files.internal("reactionSad.png"));
         Texture reactionNeutralTexture = new Texture(Gdx.files.internal("reactionNeutral.png"));
@@ -61,32 +67,105 @@ public class Capitolo1 implements Screen {
         Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionConfused.png"));
 
         Texture keyIcon = new Texture(Gdx.files.internal("key.png"));
+        Texture letterIcon = new Texture(Gdx.files.internal("lettera.png"));
 
 
 
 
         //inizializzazione Stringhe per interazioni
-        String[] stringaOsservaPorta = new String[]  {"quella è la mia porta.." ,"bho...", "c'è nessuno?",};
-        String[] stringaOsservaComodino = new String[] {"il comodino...","è un bel comodino...","c'è il pupazzo di kermit"};
-        String[] stringaOsservaLetto = new String[] {"il mio letto...","a che ora mi sono svegliato?..."," vabbè  "};
-        String[] stringaOsservaOrologio = new String[] {"ciao"};
+        String[] stringaOsservaPorta = new String[]  {"Provo a bussare...\n" +
+                                                        "C'è nessuno??\n" +
+                                                        "Qualche infermiere?",
 
-        String[] stringaUsaPorta = new String[]  {"non si apre..." ,"è chiusa a chiave...", "la chiave sarà in giro"};
-        String[] stringaRaccogliComodino = new String[] {"vediamo cosa c'è qui...","ho trovato la chiave!",};
-        String[] stringaUsaLetto = new String[] {"...","non ho molto sonno..."," ho dormito abbastanza  "};
+                                                      ".....",
 
-
-        //stringhe per debugging
-        String[] stringaOsservaPorta1 = new String[]  {" osserva porta 1" ," osserva porta 2", " osserva porta 3"};
-        String[] stringaOsservaComodino1 = new String[] {" osserva comodino 1"," osserva comodino 2"," osserva comodino 3"};
-        String[] stringaOsservaLetto1 = new String[] {"osserva letto 1.","osserva letto 2"," osserva letto 3  "};
-        String[] stringaUsaPorta1 = new String[]  {" usa porta 1" ," usa porta 2", " usa porta 3","usa porta 4"};
-        String[] stringaRaccogliComodino1 = new String[] {" raccogli comodino 1"," raccolgi comodino 2"};
-        String[] stringaUsaLetto1 = new String[] {"usa letto 1.","usa letto 2"," usa letto 3  "};
+                                                      "Se avessi 10 kili in più di\n" +
+                                                        "muscoli potrei persino provare\n" +
+                                                        "a sfondarla... ma no meglio\n" +
+                                                        "evitare... lo dico per il suo bene"};
 
 
+        String[] stringaOsservaLetto = new String[] {"Questa notte ho fatto sempre il solito sogno...\n" +
+                                                        "Quella strana ombra...ma chi sarà?",
 
-        //utilizzo il json per caricare il font
+                                                     "Se qualcuno si aspetta che io\n" +
+                                                        "tiri su le coperte beh quel\n" +
+                                                        "qualcuno si sbaglia di grosso"};
+
+
+        String[] stringaOsservaComodino = new String[] {"Oggi camera mia sembra più silenziosa del solito...\n" +
+                                                            "di solito si sente sempre quel bimbo piangere...\n" +
+                                                            "...",
+                                                        "spero stia bene...",
+
+                                                        "Nonostante tutto quello che mi sia capitato\n" +
+                                                            "il mio pupazzo di Kermit è ancora qui",
+
+                                                        "Non sono il tipo che rovista\n" +
+                                                            "ma devo avere qualche strana\n" +
+                                                            "affinità con i cassetti"};
+
+
+        String[] stringaOsservaOrologio = new String[] {"Ecco! mi piacerebbe sapere\n" +
+                                                            "l'ora",
+
+                                                        "Ovviamente è rotto, bella la\n" +
+                                                            "sanità pubblica... paghi le\n" +
+                                                            "tasse per gli orologi rotti",
+
+                                                        "Sono sicuro che continuerà\n" +
+                                                            "a segnare lo stesso orario\n" +
+                                                            "per il resto della mia vita..."};
+
+
+        String[] stringaOsservaFinestra = new String[] {"Come mai la finestra è chiusa?\n" +
+                                                            "Ogni mattina arrivano gli infermieri ad aprirla...\n" +
+                                                            "mi piacerebbe sapere dove sono finiti",
+
+                                                        "Ho sempre desiderato mettere un grande poster\n" +
+                                                            "proprio qui sotto la finestra,\n" +
+                                                            "...\n" ,
+
+
+                                                            "però il dottore non me lo ha mai permesso..\n"+
+                                                                    "diceva che mi avrebbe fatto male al cervello...bha\n"};
+
+
+
+        String[] stringaOsservaCartellina = new String[] {"Ci sono documenti molto\nriservati",
+
+                                                          "Vedo una strana busta"};
+
+
+        String[] stringaUsaPorta = new String[]  {"Non si apre..." ,
+
+                                                  "É chiusa a chiave...",
+
+                                                  "Potrei provare a stabilire un\n" +
+                                                    "contatto spirituale con la porta\n" +
+                                                    "continuando a guardare... oppure\n" +
+                                                    "darmi una mossa e cercare una\nchiave"};
+
+
+        String[] stringaRaccogliComodino = new String[] {"vediamo cosa c'è qui...",
+
+                                                         "ho trovato la chiave!"};
+
+
+        String[] stringaUsaLetto = new String[] {"Non ho sonno...",
+
+                                                 "Ho dormito abbastanza per oggi...\n" +
+                                                    "vorrei solo che...\n"
+                ,
+                                                    "lasciamo stare..."};
+
+
+        String[] stringaRaccogliCartellina = new String[] {"*hai raccolto la busta\nriservata alla direzione*"};
+
+
+
+
+        //utilizzo il json per caricare il font e imposto telecamera visualizzazione
         final Skin mySkin2 = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         final float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
 
@@ -97,58 +176,73 @@ public class Capitolo1 implements Screen {
 
 
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("camera_ospedale_base.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
 
-     final   Protagonista pgTest = new Protagonista(nomegiocatore,new Texture("bimbo.png"));
+     final   Protagonista pgTest = new Protagonista(new Texture("bimbo.png"));
         pgTest.setSize(23,28);
 
 
-        //creare già le texture e stringhe inizializzatee così è più facile assegnarle agli attori
+        //creazione oggetti raccoglibili e settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
-        Oggetto chiave = new Oggetto(keyIcon,"è una chiave",false);
-        chiave.setIdPuzzle("key");
+        Oggetto chiave = new Oggetto(keyIcon,"Chiave","key","X",false);
+
+        Oggetto lettera = new Oggetto(letterIcon,"Lettera riservata","X","X",false);
+
 
         //creazione interazioni e inizializzazione dimensioni
 
-        Interazione door = new Interazione(portaTexture,stringaOsservaPorta1,stringaUsaPorta1,reactionConfusedTexture,reactionNeutralTexture);
+        Interazione door = new Interazione("door",portaTexture,stringaOsservaPorta,stringaUsaPorta,reactionConfusedTexture,reactionSadTexture);
         door.setSize(16,26.6f);
 
 
 
 
-        Interazione comodino = new Interazione(stringaOsservaComodino1,comodinoTexture,reactionConfusedTexture,reactionSurprisedTexture,stringaRaccogliComodino1,chiave);
+        Interazione comodino = new Interazione(stringaOsservaComodino,comodinoTexture,reactionConfusedTexture,reactionSurprisedTexture,stringaRaccogliComodino,chiave);
         comodino.setSize(20,25.3f);
 
 
 
 
-        Interazione letto = new Interazione(lettoTexture,stringaOsservaLetto1,stringaUsaLetto1,reactionNeutralTexture,reactionHappyTexture);
-        letto.setSize(40,24);
+        Interazione letto = new Interazione("bed",lettoTexture,stringaOsservaLetto,stringaUsaLetto,reactionNeutralTexture,reactionNeutralTexture);
+        letto.setSize(40.2f,25);
 
 
 
         Interazione orologio = new Interazione(orologioTexture,stringaOsservaOrologio,reactionConfusedTexture);
+        orologio.setSize(12,14);
 
+
+
+        Interazione finestra = new Interazione(finestraTexture,stringaOsservaFinestra,reactionScaredTexture);
+        finestra.setSize(20,12);
+
+
+        Interazione cartellina = new Interazione(stringaOsservaCartellina, cartellinaTexture, reactionNeutralTexture, reactionSurprisedTexture, stringaRaccogliCartellina, lettera);
+        cartellina.setSize(6.2f,9);
 
         //imposto posizioni interazioni
 
+        cartellina.setPosition(4.2f,31.1f);
+        finestra.setPosition(70.5f, 49);
+        orologio.setPosition(28.5f,52.5f);
         door.setPosition(7.75f,22.7f);
         comodino.setPosition(26.95f,18.3f);
-        letto.setPosition(66,17);
-        pgTest.setPosition(65,17);
+        letto.setPosition(50,15.9f);
+        pgTest.setPosition(74,17);
 
 
         final Group scena = new Group();
-
         //aggiungo interazioni alla scena
 
         scena.addActor(door);
         scena.addActor(comodino);
         scena.addActor(letto);
         scena.addActor(pgTest);
+        scena.addActor(orologio);
+        scena.addActor(finestra);
+        scena.addActor(cartellina);
         pgTest.setTouchable(Touchable.disabled);
 
 
@@ -171,7 +265,9 @@ public class Capitolo1 implements Screen {
 
         },2);
 */
-       final Menu menu = new Menu();
+        //creo il menù che gestisce le interazioni con gli oggetti e il puzzle del capitolo
+       final Menu menu = new Menu(1, partita);
+
 
         scena.addCaptureListener(new InputListener(){
 
@@ -199,8 +295,9 @@ public class Capitolo1 implements Screen {
 
                     if (hit!=null){
 
-
+                        //passo al menù l'interazione cliccata
                         menu.selezionaInterazione(hit);
+                     //   menu.modificaInterazione(hit); //PERCHÈ FUNZIONA COMUNQUE LA MODIFICA ???
 
                         if(menu.isRimuovibile(hit))
                             scena.removeActor(hit);
@@ -214,16 +311,16 @@ public class Capitolo1 implements Screen {
             }
         });
 
-
+        //imposto il gestore degli input
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(menu.stage);
         Gdx.input.setInputProcessor(multiplexer);
 
+
+        //creo l'interfaccia con la mappa
         stage.addActor(sfondo);
-
         stage.addActor(scena);
-
         stage.addActor(menu);
 
 
