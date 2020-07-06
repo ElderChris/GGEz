@@ -2,6 +2,7 @@ package schermate;
 
 import Azioni.Menu;
 import WorldElement.Interazione;
+import WorldElement.Oggetto;
 import WorldElement.Protagonista;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
+import WorldElement.InterazioniCap2;
+
 
 public class Capitolo2_2 implements Screen {
     MyGdxGame partita;
@@ -53,7 +56,7 @@ public class Capitolo2_2 implements Screen {
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("sfondo.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("forest2_base.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
@@ -62,22 +65,48 @@ public class Capitolo2_2 implements Screen {
 
         //creazione oggetti raccoglibili e settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
-
+        InterazioniCap2.getPalloneIncastrato().setDescrizione("pallone");
 
 
         //creazione interazioni e inizializzazione dimensioni
 
+        //metterle nella classe apposita e testare il livello
 
+        InterazioniCap2.getAlberoGigante().setSize(10,10);
+
+        InterazioniCap2.getCartelloTravel().setSize(10,10);
+
+        InterazioniCap2.getCartelloBack().setSize(10,10);
+
+        InterazioniCap2.getPalloneIncastrato().setSize(10,10);
+
+        InterazioniCap2.getCumuloRocce().setSize(10,10);
 
 
 
         //imposto posizioni interazioni
+        InterazioniCap2.getAlberoGigante().setPosition(55,55);
+        InterazioniCap2.getCartelloTravel().setPosition(30,30);
+        InterazioniCap2.getCartelloBack().setPosition(40,40);
+        InterazioniCap2.getPalloneIncastrato().setPosition(50,50);
+        InterazioniCap2.getCumuloRocce().setPosition(70,70);
+
+        pgTest.setPosition(45,67);
 
 
 
         final Group scena= new Group();
         //aggiungo interazioni alla scena
 
+        scena.addActor( InterazioniCap2.getAlberoGigante());
+        scena.addActor(InterazioniCap2.getCartelloTravel());
+        scena.addActor( InterazioniCap2.getCartelloBack());
+
+        if(!InterazioniCap2.getPalloneIncastrato().isRimuovibile())
+        scena.addActor(InterazioniCap2.getPalloneIncastrato());
+
+        scena.addActor(pgTest);
+        scena.addActor( InterazioniCap2.getCumuloRocce());
 
 
 

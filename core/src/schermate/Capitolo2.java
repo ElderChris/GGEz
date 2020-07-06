@@ -2,6 +2,7 @@ package schermate;
 
 import Azioni.Menu;
 import WorldElement.Interazione;
+import WorldElement.Oggetto;
 import WorldElement.Protagonista;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
+import WorldElement.InterazioniCap2;
 
 public class Capitolo2 implements Screen {
     MyGdxGame partita;
@@ -35,100 +37,10 @@ public class Capitolo2 implements Screen {
 
         Image sfondo = new Image(new Texture(Gdx.files.internal("foresta1_base.png")));
 
-        Texture portaTexture = new Texture(Gdx.files.internal("portaF.png"));
-        Texture cartelloDx = new Texture(Gdx.files.internal("cartellodx.png"));
-        Texture cartelloSx = new Texture(Gdx.files.internal("cartellosx.png"));
-        Texture alberoDx = new Texture(Gdx.files.internal("alberodx.png"));
-        Texture alberoSx = new Texture(Gdx.files.internal("alberosx.png"));
-        Texture sandbox = new Texture(Gdx.files.internal("sabbia.png"));
-        Texture lume = new Texture(Gdx.files.internal("lume.png"));
-        Texture puntoDiLuce = new Texture(Gdx.files.internal("travelPoint.png"));
-        Texture bimbo = new Texture(Gdx.files.internal("bambino.png"));
-
-        Texture reactionParla= new Texture(Gdx.files.internal("bambinoSad.png"));
-        Texture reactionParlaRisolto= new Texture(Gdx.files.internal("bambinoHappy.png"));
-
-        Texture reactionSadTexture = new Texture(Gdx.files.internal("reactionSad.png"));
-        Texture reactionNeutralTexture = new Texture(Gdx.files.internal("reactionNeutral.png"));
-        Texture reactionScaredTexture = new Texture(Gdx.files.internal("reactionScared.png"));
-        Texture reactionSurprisedTexture = new Texture(Gdx.files.internal("reactionSurprised.png"));
-        Texture reactionHappyTexture = new Texture(Gdx.files.internal("reactionHappy.png"));
-        Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionConfused.png"));
-
-       Texture rockicon=new Texture(Gdx.files.internal("rock.png"));
-        Texture fiondaicon= new Texture(Gdx.files.internal("slingshot.png"));
-
 
 
 
         //inizializzazione stringhe per interazioni
-
-        String[] stringaOsservaPorta = new String[] {""
-
-                                                    };
-
-        String[] stringaUsaPorta= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaCartelloDx= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaCartelloSx= new String[] {""
-
-        };
-
-
-        String[] stringaUsaCartelloSx= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaAlberoDx= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaAlberoSx= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaSandbox= new String[] {""
-
-        };
-
-
-        String[] stringaRaccogliSandbox= new String[] {""
-
-        };
-
-
-        String[] stringaOsservaLume= new String[] {""
-
-        };
-
-
-        String[] stringaUsaLume= new String[] {""
-
-        };
-
-
-        String[] stringaParlaBimbo= new String[] {""
-
-        };
-
-        String[] stringaParlaPuzzleRisolto= new String[] {""
-
-        };
-
-        String[] stringaOsservaSentiero = new String[] {""
-        };
-
-
 
 
 
@@ -158,20 +70,30 @@ public class Capitolo2 implements Screen {
 
         //creazione interazioni e inizializzazione dimensioni
 
-      //  Interazione porta = new Interazione();
-      //  Interazione cartelloDestro= new Interazione();
-      //  Interazione cartelloSinistro = new Interazione();
-      //  Interazione sabbia = new Interazione();
-      //  Interazione fiore = new Interazione();
-      //  Interazione puntoLuce = new Interazione();
-      //  Interazione bambino = new Interazione();
 
+        InterazioniCap2.getPorta().setSize(10,10);
 
+        InterazioniCap2.getCartelloDestro().setSize(14,10);
 
+        InterazioniCap2.getCartelloSinistro().setSize(10,10);
+
+        InterazioniCap2.getSabbia().setSize(13,23);
+
+        InterazioniCap2.getFiore().setSize(12,12);
+
+        InterazioniCap2.getPuntoLuce().setSize(13,23);
+
+        InterazioniCap2.getBambino().setSize(13,10);
 
         //imposto posizioni interazioni
 
-
+        InterazioniCap2.getPorta().setPosition(82,30);
+        InterazioniCap2.getCartelloDestro().setPosition(60,30);
+        InterazioniCap2.getCartelloSinistro().setPosition(40,30);
+        InterazioniCap2.getSabbia().setPosition(45,10);
+        InterazioniCap2.getFiore().setPosition(35,50);
+        InterazioniCap2.getPuntoLuce().setPosition(10,30);
+        InterazioniCap2.getBambino().setPosition(23,23);
 
         pgTest.setPosition(70,18);
 
@@ -180,6 +102,13 @@ public class Capitolo2 implements Screen {
         final Group scena= new Group();
         //aggiungo interazioni alla scena
 
+        scena.addActor(InterazioniCap2.getPorta());
+        scena.addActor(InterazioniCap2.getCartelloDestro());
+        scena.addActor(InterazioniCap2.getCartelloSinistro());
+        scena.addActor(InterazioniCap2.getSabbia());
+        scena.addActor(InterazioniCap2.getFiore());
+        scena.addActor(InterazioniCap2.getPuntoLuce());
+        scena.addActor(InterazioniCap2.getBambino());
         scena.addActor(pgTest);
         pgTest.setTouchable(Touchable.disabled);
 

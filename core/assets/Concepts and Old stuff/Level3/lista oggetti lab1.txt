@@ -1,0 +1,5 @@
+-Porta sinistra
+-Porta destra
+-Telecamera
+-Kermit nella roba
+-Banco da lavoro con robot 'rotto'

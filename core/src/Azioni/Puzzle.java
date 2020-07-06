@@ -5,6 +5,9 @@ import WorldElement.Oggetto;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
 import schermate.Capitolo2;
+import schermate.Capitolo2_2;
+import schermate.Capitolo3;
+import schermate.Capitolo3_2;
 
 import java.util.ArrayList;
 
@@ -14,33 +17,78 @@ public class Puzzle {
     public Puzzle() {
     }
 
-    public boolean selezionaPuzzle(int capitoloAttuale, Interazione interazione){
+    public void selezionaPuzzle(int capitoloAttuale, Interazione interazione,MyGdxGame partita) {
         boolean check = false;
-        switch (capitoloAttuale){
+
+        if(interazione.getDescrizione().equals("travelPointForest"))
+            partita.setScreen(new Capitolo2_2(partita));
+
+        if(interazione.getDescrizione().equals("travelPointForestBack"))
+            partita.setScreen(new Capitolo2(partita));
+
+        if(interazione.getDescrizione().equals("travelPointLaboratory"))
+            partita.setScreen(new Capitolo3_2(partita));
+
+        if(interazione.getDescrizione().equals("travelPointLaboratoryBack"))
+            partita.setScreen(new Capitolo3(partita));
+
+
+        switch (capitoloAttuale) {
             case 1:
-                if(interazione.getDescrizione().equals("door")) {
+                if (interazione.getDescrizione().equals("door")) {
                     if (puzzleCapitolo1())
-                        check = true;
+                        partita.setScreen(new Capitolo2(partita));
+
                 }
                 break;
-            default: System.out.println("ERRORE");
+
+            case 2:
+                if(interazione.getDescrizione().equals("toChapter3")){
+                    if(puzzleCapitolo2())
+                        partita.setScreen(new Capitolo3(partita));
+
+                }
                 break;
+
+            case 3:
+                if(interazione.getDescrizione().equals("toChapter4")){
+                    if(puzzleCapitolo3())
+                        check=true;
+                }
+                break;
+
+
+            default:
+                System.out.println("ERRORE");
+                break;
+        }
+
+    }
+
+    private boolean puzzleCapitolo1() {
+        boolean check = false;
+        for (Oggetto oggetto : getLista()) {
+            if (oggetto.getIdPuzzle().equals("key"))
+                check = true;
         }
         return check;
     }
 
-    public boolean puzzleCapitolo1(){
+    private boolean puzzleCapitolo2() {
         boolean check = false;
-        for(Oggetto oggetto : getLista()) {
-            if (oggetto.getIdPuzzle().equals("key"))
-                check = true;
+        for(Oggetto oggetto :getLista()) {
+            if(oggetto.getIdPuzzle().equals("toChapter3"))
+                check=true;
         }
-            return check;
+        return check;
     }
 
-    public boolean puzzleCapitolo2(){
-        boolean check=false;
-
+    private boolean puzzleCapitolo3() {
+        boolean check = false;
+        for(Oggetto oggetto :getLista()) {
+            if(oggetto.getIdPuzzle().equals("toChapter4"))
+                check=true;
+        }
         return check;
     }
 

@@ -37,6 +37,7 @@ public class Menu extends Group  implements InputProcessor {
     private Image plusButton;
     public boolean plus = false;
     public boolean combina = false;
+    private boolean giaRaccolto = false;
     public Oggetto[] materialiCombinazione = {null, null};
     //                          FINE BANCO PROVA
 
@@ -204,6 +205,8 @@ public class Menu extends Group  implements InputProcessor {
         parlaButton.addCaptureListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                osservaButton.setTouchable(Touchable.disabled);
                 parla(interazioneSelezionata);
 
 
@@ -353,6 +356,8 @@ public class Menu extends Group  implements InputProcessor {
     public void selezionaInterazione(Interazione interazione){
         interazioneSelezionata= interazione;
 
+        raccogliButton.setVisible(false);
+
 
 
         box.setTouchable(Touchable.disabled);
@@ -385,12 +390,12 @@ public class Menu extends Group  implements InputProcessor {
 
         if(interazione.isRaccoglibile())
             raccogliButton.setVisible(true);
-        else raccogliButton.setVisible(false);
+        //else raccogliButton.setVisible(false);
 
 
         if(interazione.isRaccoglibileContenitore())
             raccogliButton.setVisible(true);
-        else raccogliButton.setVisible(false);
+       // else raccogliButton.setVisible(false);
 
         if(interazione.isRaccolto())
         raccogliButton.setVisible(false);
@@ -436,6 +441,71 @@ public class Menu extends Group  implements InputProcessor {
         mostraReazione(reaction);
     }
 
+    public void parla(Interazione interazioneSelezionata){
+        //gli npc sputano stringhe in base se hai un oggetto nell'inventario o meno.
+        //a loro si consegnano gli oggetti che spariscono dalla table ma non dalla lista (per poter continuare a usare la stringa puzzleFinito
+        //infine ti consegnano oggetti invisibili (solo nella lista) utile solo al proseguimento del livello
+        if(menu.findActor("reaction")!=null)
+            menu.removeActor(reaction);
+
+        if(cercaOggetto("pallone")) {
+            interazioneSelezionata.setPuzzleRisolto(true);
+
+
+
+            if(!Combinazioni.giaRaccoltoChapter2) {
+                getLista().add(Combinazioni.perCapitolo3);
+
+                Combinazioni.giaRaccoltoChapter2=true;
+            }
+        }
+
+        if(cercaOggetto("sogno")){
+            interazioneSelezionata.setPuzzleRisolto(true);
+
+            if(!Combinazioni.giaRaccoltoChapter3) {
+                getLista().add(Combinazioni.perCapitolo4);
+                Combinazioni.giaRaccoltoChapter3=true;
+            }
+        }
+
+
+        if(!interazioneSelezionata.isPuzzleRisolto()) {
+            label.setText(interazioneSelezionata.getStringaParla()[0]);
+            label.setVisible(true);
+            stringaSelezionata = interazioneSelezionata.getStringaParla();
+
+            reaction = new Image(interazioneSelezionata.getReactionFaceParla());
+
+
+        }else{
+
+            label.setText(interazioneSelezionata.getStringaPuzzleRisolto()[0]);
+            label.setVisible(true);
+            stringaSelezionata = interazioneSelezionata.getStringaPuzzleRisolto();
+
+            reaction = new Image(interazioneSelezionata.getReactionFaceParlaPuzzleRisolto());
+
+        }
+
+        parlaButton.setTouchable(Touchable.disabled);
+        mostraReazione(reaction);
+
+    }
+
+
+
+
+        public boolean cercaOggetto(String idPuzzle){
+        boolean check = false;
+            for(Oggetto oggetto : getLista()) {
+                if (oggetto.getIdPuzzle().equals(idPuzzle))
+                    check=true;
+            }
+
+        return  check;
+        }
+
 
     public void mostraReazione(Actor reaction){
         reaction.setName("reaction");
@@ -451,30 +521,56 @@ public class Menu extends Group  implements InputProcessor {
 
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
+
         label.setText(interazioneSelezionata.getStringaRaccogli()[0]);
         label.setVisible(true);
+
         stringaSelezionata=interazioneSelezionata.getStringaRaccogli();
 
         reaction = new Image(interazioneSelezionata.getReactionFaceRaccogli());
 
-        //qui aggiungi l'oggetto alla lista
-        if(!interazioneSelezionata.getOggetto().isRaccolto()) {
-            getLista().add(interazioneSelezionata.getOggetto());
-            check=true;
+        //Solo per quanto riguarda il pallone,questo IF gestisce la sua specialità (è raccoglibile solo se possiedi la fionda carica)
+
+        if(interazioneSelezionata.getDescrizione().equals("pallone")){
+            Gdx.app.log(" pallone puzzle "," hai fatto raccogli sul pallone");
+
+            if(cercaOggetto("fiondaCarica")){
+                Gdx.app.log(" pallone puzzle ","hai raccolto il pallone grazie alla fionda caricata");
+                interazioneSelezionata.setPuzzleRisolto(true);
+                label.setText("Ce l'ho fatta! ");
+                getLista().add(interazioneSelezionata.getOggetto());
+                check=true;
+                getTable().add(interazioneSelezionata.getOggetto()).padRight(15);
+
+
+                if(interazioneSelezionata.isRaccoglibile())
+                    interazioneSelezionata.setRimuovibile(true);
+            }
+        }else {
+
+
+            //qui aggiungi l'oggetto alla lista
+            if (!interazioneSelezionata.getOggetto().isRaccolto()) {
+                getLista().add(interazioneSelezionata.getOggetto());
+                check = true;
+            }
+            //e va aggiunto alla table
+            getTable().add(interazioneSelezionata.getOggetto()).padRight(15);
+
+
+            if(interazioneSelezionata.isRaccoglibile())
+                interazioneSelezionata.setRimuovibile(true);
+
+
+
+            if(interazioneSelezionata.isRaccoglibileContenitore())
+                interazioneSelezionata.setRaccolto(true);
+
+
+
         }
-        //e va aggiunto alla table
-        getTable().add(interazioneSelezionata.getOggetto()).padRight(15);
 
 
-
-
-          if(interazioneSelezionata.isRaccoglibile())
-              interazioneSelezionata.setRimuovibile(true);
-
-
-
-          if(interazioneSelezionata.isRaccoglibileContenitore())
-              interazioneSelezionata.setRaccolto(true);
 
 
         raccogliButton.setTouchable(Touchable.disabled);
@@ -486,10 +582,12 @@ public class Menu extends Group  implements InputProcessor {
 
     public void usa(Interazione interazioneSelezionata) {
 
-        //da aggiungere interazione con il pallone
 
-        if (puzzle.selezionaPuzzle(capitoloAttuale, interazioneSelezionata))
-            nextLevel();
+
+
+        puzzle.selezionaPuzzle(capitoloAttuale, interazioneSelezionata,partita);
+
+         //   nextLevel();
 
         if (menu.findActor("reaction") != null)
             menu.removeActor(reaction);
@@ -504,13 +602,6 @@ public class Menu extends Group  implements InputProcessor {
         mostraReazione(reaction);
     }
 
-    public void parla(Interazione interazioneSelezionata){
-        //gli npc sputano stringhe in base se hai un oggetto nell'inventario o meno.
-        //a loro si consegnano gli oggetti che spariscono dalla table ma non dalla lista (per poter continuare a usare la stringa puzzleFinito
-        //infine ti consegnano oggetti invisibili (solo nella lista) utile solo al proseguimento del livello
-
-
-    }
 
 
     //La funzione combina genera il nuovo oggetto e rimuove i materiali dalla lista
@@ -549,7 +640,7 @@ public class Menu extends Group  implements InputProcessor {
 
                         default:
                             Gdx.app.log("ERRORE", null);
-                            labelOgg.setText("La preghiamo di contattare quello stupido di un programmatore!");
+                            labelOgg.setText("Per logica, sceglierei prima un oggetto ");
                             break;
                     }
                 }else
@@ -557,8 +648,11 @@ public class Menu extends Group  implements InputProcessor {
             }else
                 labelOgg.setText("Non sembra una cosa intelligente");
 
-        }
+        }else
+            labelOgg.setText("Non sembra una cosa intelligente");
 
+        materialiCombinazione[0]=null;
+        materialiCombinazione[1]=null;
         combina = false;
         plus = false;
         return oggetto;

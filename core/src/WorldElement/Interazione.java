@@ -32,6 +32,7 @@ public class Interazione extends Image {
     private boolean rimuovibile; //se vero, il suo oggetto interno è stato raccolto e ora l'interazione può essere rimosso dalla scena
     private boolean raccolto; //se vero, il suo oggetto inteerno è stato raccolto e ora non più possibile rifare 'raccogli'
     private boolean npc; //se vero, allora rappresenta un personaggio non giocante
+    private  boolean puzzleRisolto;
 
     //costruzione interazione personalizzata
     public Interazione(Texture texture, String[] stringaOsserva, String[] stringaUsa, String[] stringaRaccogli, String descrizione, boolean usabile,
@@ -91,6 +92,8 @@ public class Interazione extends Image {
         this.oggetto=oggetto;
         rimuovibile=false;
 
+
+        descrizione= " ";
         this.setName("raccoglibile");
 
     }
@@ -108,18 +111,22 @@ public class Interazione extends Image {
         this.oggetto=oggetto;
         raccolto=false;
 
+        descrizione= " ";
         this.setName("contenitore");
 
     }
     //costruttore per i personaggi, con loro è disponibile solo il tasto parla, il giocatore può ricevere / consegnare oggetti ai personaggi (per puzzle)
-    public Interazione(Texture texture,Texture reactionFace,Texture reactionFaceParlaPuzzleRisolto ,String[] stringaParla, String[] stringaPuzzleRisolto){
+    public Interazione(Texture texture,Texture reactionFace,Texture reactionFacePuzzleRisolto ,String[] stringaParla, String[] stringaPuzzleRisolto){
         super(texture);
         this.stringaParla=stringaParla;
         this.reactionFaceParla=reactionFace;
         this.stringaParla=stringaParla;
         this.stringaPuzzleRisolto=stringaPuzzleRisolto;
-        this.reactionFaceParlaPuzzleRisolto= reactionFaceParlaPuzzleRisolto;
+        this.reactionFaceParlaPuzzleRisolto= reactionFacePuzzleRisolto;
+        npc=true;
+        puzzleRisolto=false;
 
+        this.setName("npc");
     }
 
 
@@ -165,6 +172,22 @@ public class Interazione extends Image {
 
     public void setStringaPuzzleRisolto(String[] stringaPuzzleRisolto) {
         this.stringaPuzzleRisolto = stringaPuzzleRisolto;
+    }
+
+    public Texture getReactionFaceParlaPuzzleRisolto() {
+        return reactionFaceParlaPuzzleRisolto;
+    }
+
+    public void setReactionFaceParlaPuzzleRisolto(Texture reactionFaceParlaPuzzleRisolto) {
+        this.reactionFaceParlaPuzzleRisolto = reactionFaceParlaPuzzleRisolto;
+    }
+
+    public boolean isPuzzleRisolto() {
+        return puzzleRisolto;
+    }
+
+    public void setPuzzleRisolto(boolean puzzleRisolto) {
+        this.puzzleRisolto = puzzleRisolto;
     }
 
     public Texture getReactionFaceParla() {

@@ -202,10 +202,12 @@ public class Capitolo1 implements Screen {
         Interazione comodino = new Interazione(stringaOsservaComodino,comodinoTexture,reactionConfusedTexture,reactionSurprisedTexture,stringaRaccogliComodino,chiave);
         comodino.setSize(20,25.3f);
 
+        comodino.setDescrizione("lmao");
 
 
 
-        Interazione letto = new Interazione("bed",lettoTexture,stringaOsservaLetto,stringaUsaLetto,reactionNeutralTexture,reactionNeutralTexture);
+
+        Interazione letto = new Interazione("bed",lettoTexture,stringaOsservaLetto,stringaUsaLetto,reactionNeutralTexture,reactionSadTexture);
         letto.setSize(40.2f,25);
 
 
