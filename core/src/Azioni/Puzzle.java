@@ -4,10 +4,7 @@ import WorldElement.Interazione;
 import WorldElement.Oggetto;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
-import schermate.Capitolo2;
-import schermate.Capitolo2_2;
-import schermate.Capitolo3;
-import schermate.Capitolo3_2;
+import schermate.*;
 
 import java.util.ArrayList;
 
@@ -53,7 +50,7 @@ public class Puzzle {
             case 3:
                 if(interazione.getDescrizione().equals("toChapter4")){
                     if(puzzleCapitolo3())
-                        check=true;
+                        partita.setScreen(new SchermataFinale(partita));
                 }
                 break;
 

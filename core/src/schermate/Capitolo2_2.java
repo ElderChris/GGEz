@@ -34,16 +34,6 @@ public class Capitolo2_2 implements Screen {
     public Capitolo2_2(final MyGdxGame partita){
         this.partita=partita;
 
-        //inizializzazione texture
-
-
-
-
-
-
-        //inizializzazione stringhe per interazioni
-
-
 
 
 
@@ -68,9 +58,9 @@ public class Capitolo2_2 implements Screen {
         InterazioniCap2.getPalloneIncastrato().setDescrizione("pallone");
 
 
-        //creazione interazioni e inizializzazione dimensioni
+        //inizializzazione dimensioni Interazioni
 
-        //metterle nella classe apposita e testare il livello
+
 
         InterazioniCap2.getAlberoGigante().setSize(10,10);
 
@@ -122,6 +112,9 @@ public class Capitolo2_2 implements Screen {
 
 
                 Interazione hit = null;
+
+
+
                 try {
                     hit = (Interazione) scena.hit(x, y, false); //hit rappresenta l'attore selezionato con un click
                 }catch (Exception ClassCastException){ }
@@ -131,6 +124,7 @@ public class Capitolo2_2 implements Screen {
                     //passo al menù l'interazione cliccata
                     menu.selezionaInterazione(hit);
 
+                    //da mettere in render?
                     if(menu.isRimuovibile(hit))
                         scena.removeActor(hit);
 

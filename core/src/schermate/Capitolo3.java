@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
+import WorldElement.InterazioniCap3;
+import static Azioni.Inventario.getLista;
+
 
 public class Capitolo3 implements Screen {
     MyGdxGame partita;
@@ -38,14 +41,8 @@ public class Capitolo3 implements Screen {
     public Capitolo3(final MyGdxGame partita){
         this.partita=partita;
 
-        //inizializzazione texture
 
 
-
-
-
-
-        //inizializzazione stringhe per interazioni
 
 
 
@@ -60,37 +57,69 @@ public class Capitolo3 implements Screen {
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("sfondo.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("lab1_sfondo.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
         final Protagonista pgTest = new Protagonista(new Texture("bimbo.png"));
-        pgTest.setSize(23,28);
+        pgTest.setSize(16,22);
 
-        //creazione oggetti raccoglibili e settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
-
-
+        // settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
 
-        //creazione interazioni e inizializzazione dimensioni
 
 
+        // inizializzazione dimensioni Interazioni
+
+        InterazioniCap3.getPortaSx().setSize(16,31);
+        InterazioniCap3.getTelecamera().setSize(7,7);
+        InterazioniCap3.getKermit().setSize(11,22);
+        InterazioniCap3.getRobot().setSize(16,20);
+        InterazioniCap3.getPortaDx().setSize(13.4f,32);
+        InterazioniCap3.getLiane().setSize(26,19);
 
 
 
         //imposto posizioni interazioni
+
+        InterazioniCap3.getPortaDx().setPosition(1,30);
+        InterazioniCap3.getTelecamera().setPosition(82,61.5f);
+        InterazioniCap3.getKermit().setPosition(44,33);
+        InterazioniCap3.getRobot().setPosition(20,32);
+        InterazioniCap3.getLiane().setPosition(57,38);
+        InterazioniCap3.getPortaSx().setPosition(85,30);
+
+        pgTest.setPosition(70,20);
+
 
 
 
         final Group scena= new Group();
         //aggiungo interazioni alla scena
 
-
+        scena.addActor(pgTest);
+        scena.addActor(InterazioniCap3.getPortaSx());
+        scena.addActor(InterazioniCap3.getTelecamera());
+        scena.addActor(InterazioniCap3.getKermit());
+        scena.addActor(InterazioniCap3.getRobot());
+        scena.addActor(InterazioniCap3.getPortaDx());
+        scena.addActor(InterazioniCap3.getLiane());
 
 
 
         //creo il menù che gestisce le interazioni con gli oggetti e il puzzle del capitolo
-        final Menu menu = new Menu(2,partita);
+        final Menu menu = new Menu(3,partita);
+
+        //rimuovo il pallone dall'inventario Logico così da resettare l'interazione con il dottore
+        menu.rimuoviOggetto("pallone");
+
+        if(menu.cercaOggetto("pallone"))
+            Gdx.app.log(" RIMOZIONE TEST","NON rimosso il pallone");
+        else Gdx.app.log("RIMOZIONE TEST", "hai hai rimosso il pallone");
+
+
+
+
 
 
         scena.addCaptureListener(new InputListener(){

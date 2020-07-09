@@ -40,11 +40,6 @@ public class Capitolo2 implements Screen {
 
 
 
-        //inizializzazione stringhe per interazioni
-
-
-
-
 
 
         //utilizzo il json per caricare il font e imposto telecamera visualizzazione
@@ -71,29 +66,29 @@ public class Capitolo2 implements Screen {
         //creazione interazioni e inizializzazione dimensioni
 
 
-        InterazioniCap2.getPorta().setSize(10,10);
+        InterazioniCap2.getPorta().setSize(14,20);
 
-        InterazioniCap2.getCartelloDestro().setSize(14,10);
+        InterazioniCap2.getCartelloDestro().setSize(10,12.45f);
 
-        InterazioniCap2.getCartelloSinistro().setSize(10,10);
+        InterazioniCap2.getCartelloSinistro().setSize(7.5f,12);
 
-        InterazioniCap2.getSabbia().setSize(13,23);
+        InterazioniCap2.getSabbia().setSize(9.2f,7.7f);
 
-        InterazioniCap2.getFiore().setSize(12,12);
+        InterazioniCap2.getFiore().setSize(4.5f,7);
 
-        InterazioniCap2.getPuntoLuce().setSize(13,23);
+        InterazioniCap2.getPuntoLuce().setSize(6.5f,7);
 
-        InterazioniCap2.getBambino().setSize(13,10);
+        InterazioniCap2.getBambino().setSize(13,16);
 
         //imposto posizioni interazioni
 
-        InterazioniCap2.getPorta().setPosition(82,30);
-        InterazioniCap2.getCartelloDestro().setPosition(60,30);
-        InterazioniCap2.getCartelloSinistro().setPosition(40,30);
-        InterazioniCap2.getSabbia().setPosition(45,10);
-        InterazioniCap2.getFiore().setPosition(35,50);
-        InterazioniCap2.getPuntoLuce().setPosition(10,30);
-        InterazioniCap2.getBambino().setPosition(23,23);
+        InterazioniCap2.getPorta().setPosition(83.5f,22.9f);
+        InterazioniCap2.getCartelloDestro().setPosition(62.1f,30.7f);
+        InterazioniCap2.getCartelloSinistro().setPosition(41.5f,32.1f);
+        InterazioniCap2.getSabbia().setPosition(46,20.1f);
+        InterazioniCap2.getFiore().setPosition(48,46.5f);
+        InterazioniCap2.getPuntoLuce().setPosition(23.5f,28);
+        InterazioniCap2.getBambino().setPosition(35,21.7f);
 
         pgTest.setPosition(70,18);
 

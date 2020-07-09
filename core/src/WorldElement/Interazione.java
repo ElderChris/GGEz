@@ -126,6 +126,10 @@ public class Interazione extends Image {
         npc=true;
         puzzleRisolto=false;
 
+        //stratagemma per evitare un crash raro
+        stringaOsserva = new String[] {""};
+        reactionFaceOsserva = reactionFaceParlaPuzzleRisolto;
+
         this.setName("npc");
     }
 

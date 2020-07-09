@@ -86,15 +86,12 @@ public class Menu extends Group  implements InputProcessor {
 
 
         //per debug
-        getTable().debugTable();
-        getTable().debug();
-        getTable().debugAll();
+      //  getTable().debugTable();
+      //  getTable().debug();
+      //  getTable().debugAll();
 
 
-      /*DA FARE:
-                    - bug labelOgg
-                  -MODELLAZIONE livelli mancanti
-                  -AGGIUNGERE lucina sopra l'eggetto selezionato?
+      /*
 
 
 
@@ -361,9 +358,13 @@ public class Menu extends Group  implements InputProcessor {
 
 
         box.setTouchable(Touchable.disabled);
+
+        //cambiare da enabled a disabled?
+        parlaButton.setTouchable(Touchable.enabled);
         raccogliButton.setTouchable(Touchable.enabled);
         usaButton.setTouchable(Touchable.enabled);
         osservaButton.setTouchable(Touchable.enabled);
+
 
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
@@ -401,7 +402,7 @@ public class Menu extends Group  implements InputProcessor {
         raccogliButton.setVisible(false);
     }
 
-    public void mostraInventario(){
+    private void mostraInventario(){
         inventarioButton.setVisible(false);
         usaButton.setVisible(false);
         raccogliButton.setVisible(false);
@@ -416,7 +417,7 @@ public class Menu extends Group  implements InputProcessor {
 
     }
 
-    public void nascondiInventario(){
+    private void nascondiInventario(){
         combinaButton.setVisible(false);
         plusButton.setVisible(false);
         combina = false;
@@ -426,9 +427,10 @@ public class Menu extends Group  implements InputProcessor {
         //verrà nascosta pure la group o la table degli oggetti
     }
 
-    public void osserva(Interazione interazioneSelezionata){
+    private void osserva(Interazione interazioneSelezionata){
         if(menu.findActor("reaction")!=null)
             menu.removeActor(reaction);
+
 
 
         label.setText(interazioneSelezionata.getStringaOsserva()[0]);
@@ -441,7 +443,7 @@ public class Menu extends Group  implements InputProcessor {
         mostraReazione(reaction);
     }
 
-    public void parla(Interazione interazioneSelezionata){
+    private void parla(Interazione interazioneSelezionata){
         //gli npc sputano stringhe in base se hai un oggetto nell'inventario o meno.
         //a loro si consegnano gli oggetti che spariscono dalla table ma non dalla lista (per poter continuare a usare la stringa puzzleFinito
         //infine ti consegnano oggetti invisibili (solo nella lista) utile solo al proseguimento del livello
@@ -450,8 +452,6 @@ public class Menu extends Group  implements InputProcessor {
 
         if(cercaOggetto("pallone")) {
             interazioneSelezionata.setPuzzleRisolto(true);
-
-
 
             if(!Combinazioni.giaRaccoltoChapter2) {
                 getLista().add(Combinazioni.perCapitolo3);
@@ -507,7 +507,7 @@ public class Menu extends Group  implements InputProcessor {
         }
 
 
-    public void mostraReazione(Actor reaction){
+    private void mostraReazione(Actor reaction){
         reaction.setName("reaction");
         menu.addActor(reaction);
         reaction.setPosition(30,30);
@@ -516,7 +516,7 @@ public class Menu extends Group  implements InputProcessor {
 
     }
 
-    public boolean raccogli(Interazione interazioneSelezionata){
+    private boolean raccogli(Interazione interazioneSelezionata){
         boolean check = false;
 
         if(menu.findActor("reaction")!=null)
@@ -537,7 +537,7 @@ public class Menu extends Group  implements InputProcessor {
             if(cercaOggetto("fiondaCarica")){
                 Gdx.app.log(" pallone puzzle ","hai raccolto il pallone grazie alla fionda caricata");
                 interazioneSelezionata.setPuzzleRisolto(true);
-                label.setText("Ce l'ho fatta! ");
+                label.setText("*hai usato la fionda caricata* ");
                 getLista().add(interazioneSelezionata.getOggetto());
                 check=true;
                 getTable().add(interazioneSelezionata.getOggetto()).padRight(15);
@@ -580,14 +580,14 @@ public class Menu extends Group  implements InputProcessor {
 
     }
 
-    public void usa(Interazione interazioneSelezionata) {
+    private void usa(Interazione interazioneSelezionata) {
 
 
 
 
         puzzle.selezionaPuzzle(capitoloAttuale, interazioneSelezionata,partita);
 
-         //   nextLevel();
+
 
         if (menu.findActor("reaction") != null)
             menu.removeActor(reaction);
@@ -606,7 +606,7 @@ public class Menu extends Group  implements InputProcessor {
 
     //La funzione combina genera il nuovo oggetto e rimuove i materiali dalla lista
     //               Controllare eventuali crash
-    public Oggetto combina(Oggetto[] materialiCombinazione){
+    private Oggetto combina(Oggetto[] materialiCombinazione){
         Oggetto oggetto = null;
     //    labelOgg.setVisible(true);
        // labelOgg.setText("Combina " + materialiCombinazione[0].getDescrizione() + " con " + materialiCombinazione[1].getDescrizione());
@@ -638,8 +638,44 @@ public class Menu extends Group  implements InputProcessor {
                             oggetto = Combinazioni.fiondaCarica;
                             break;
 
+                        case "potatoChip":
+                            it = getLista().iterator();
+                            while (it.hasNext()){
+                                Oggetto ogg= it.next();
+                                if(ogg.getIdCombinazione().equals("potatoChip")){
+                                    it.remove();
+                                    getTable().removeActor(ogg);
+                                }
+                            }
+                            oggetto = Combinazioni.potatoChip;
+                            break;
+
+                        case "potatoOs":
+                            it = getLista().iterator();
+                            while (it.hasNext()){
+                                Oggetto ogg= it.next();
+                                if(ogg.getIdCombinazione().equals("potatoOs")){
+                                    it.remove();
+                                    getTable().removeActor(ogg);
+                                }
+                            }
+                            oggetto = Combinazioni.potatoOs;
+                            break;
+
+                        case "chargedPotato":
+                            it = getLista().iterator();
+                            while (it.hasNext()){
+                                Oggetto ogg= it.next();
+                                if(ogg.getIdCombinazione().equals("chargedPotato")){
+                                    it.remove();
+                                    getTable().removeActor(ogg);
+                                }
+                            }
+                            oggetto = Combinazioni.potatoCarica;
+                            break;
+
                         default:
-                            Gdx.app.log("ERRORE", null);
+                            Gdx.app.log("ERRORE", " ");
                             labelOgg.setText("Per logica, sceglierei prima un oggetto ");
                             break;
                     }
@@ -655,18 +691,34 @@ public class Menu extends Group  implements InputProcessor {
         materialiCombinazione[1]=null;
         combina = false;
         plus = false;
+
+        combinaButton.setVisible(true);
+
         return oggetto;
     }
 
 
-    public void scorriDiscorso(String[] stringa,int i){
+    private void scorriDiscorso(String[] stringa,int i){
                 if(i+1<stringa.length)
                 label.setText(stringa[i+1]);
                 else label.setText(stringa[0]);
     }
 
+
+    public void rimuoviOggetto(String idPuzzle){
+
+        Iterator<Oggetto> it = getLista().iterator();
+        while (it.hasNext()) {
+            Oggetto ogg = it.next();
+            if (ogg.getIdPuzzle().equals(idPuzzle)) {
+                it.remove();
+            }
+        }
+
+    }
+
     //controlla sempre se un Interazione copia ha subito una modifica ai parametri, se sì, trasferisce le modifiche all'Interazione reale
-    public void modificaInterazione(Interazione interazione){
+    private void modificaInterazione(Interazione interazione){
         if(interazioneSelezionata.isRaccolto())
             interazione.setRaccolto(true);
 
@@ -678,7 +730,7 @@ public class Menu extends Group  implements InputProcessor {
     return interazioneSelezionata.isRimuovibile();
     }
 
-    public void nextLevel(){
+    private void nextLevel(){
         partita.setScreen(new Capitolo2(partita));
         stage.dispose();
     }

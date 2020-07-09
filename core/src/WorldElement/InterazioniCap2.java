@@ -15,8 +15,7 @@ public class InterazioniCap2 {
     static Texture portaTexture = new Texture(Gdx.files.internal("portaF.png"));
     static Texture cartelloDx = new Texture(Gdx.files.internal("cartellodxFix.png"));
     static Texture cartelloSx = new Texture(Gdx.files.internal("cartellosxFix.png"));
-    static Texture alberoDx = new Texture(Gdx.files.internal("alberodx.png"));
-    static Texture alberoSx = new Texture(Gdx.files.internal("alberosx.png"));
+
     static Texture sandbox = new Texture(Gdx.files.internal("sabbiaFix.png"));
     static Texture lume = new Texture(Gdx.files.internal("lume.png"));
     static Texture texturepuntoDiLuce = new Texture(Gdx.files.internal("travelPoint.png"));
@@ -30,8 +29,8 @@ public class InterazioniCap2 {
     static Texture rocceHitbox = new Texture(Gdx.files.internal("hitboxRocce.png"));
     static Texture cartello = new Texture(Gdx.files.internal("cartelloFix.png"));
     static Texture cartelloBackTexture = new Texture(Gdx.files.internal("cartelloBack.png"));
-    static Texture rockIcon = new Texture(Gdx.files.internal("rock.png"));
-    static Texture pallaIcon = new Texture(Gdx.files.internal("iconaPalla.png"));
+
+
 
     static Texture reactionSadTexture = new Texture(Gdx.files.internal("reactionSad.png"));
     static Texture reactionNeutralTexture = new Texture(Gdx.files.internal("reactionNeutral.png"));
@@ -40,9 +39,8 @@ public class InterazioniCap2 {
     static Texture reactionHappyTexture = new Texture(Gdx.files.internal("reactionHappy.png"));
     static Texture reactionConfusedTexture = new Texture(Gdx.files.internal("reactionConfused.png"));
 
-
-
-    static Texture rockicon=new Texture(Gdx.files.internal("rock.png"));
+    static Texture rockIcon = new Texture(Gdx.files.internal("rock.png"));
+    static Texture pallaIcon = new Texture(Gdx.files.internal("iconaPalla.png"));
     static  Texture fiondaicon= new Texture(Gdx.files.internal("slingshot.png"));
 
 
@@ -149,7 +147,7 @@ public class InterazioniCap2 {
     private static Oggetto pallone = new Oggetto(pallaIcon,"un classico pallone da calcio","pallone","X",false);
 
 
-    //creazione interazioni e inizializzazione dimensioni
+    //creazione interazioni
 
 
     private static Interazione porta = new Interazione("porta",portaTexture,stringaOsservaPorta,stringaUsaPorta,reactionSurprisedTexture,reactionNeutralTexture);

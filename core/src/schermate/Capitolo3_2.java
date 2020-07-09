@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
+import WorldElement.InterazioniCap3;
 
 public class Capitolo3_2 implements Screen {
     MyGdxGame partita;
@@ -33,14 +34,7 @@ public class Capitolo3_2 implements Screen {
     public Capitolo3_2(final MyGdxGame partita){
         this.partita=partita;
 
-        //inizializzazione texture
 
-
-
-
-
-
-        //inizializzazione stringhe per interazioni
 
 
 
@@ -55,37 +49,61 @@ public class Capitolo3_2 implements Screen {
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("sfondo.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("lab2_baseFix.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
         final Protagonista pgTest = new Protagonista(new Texture("bimbo.png"));
-        pgTest.setSize(23,28);
-
-        //creazione oggetti raccoglibili e settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
 
-
-
-        //creazione interazioni e inizializzazione dimensioni
+        // settare l'idPuzzle in modo che il sistema riconosca gli elementi chiave per superare i capitoli
 
 
 
+
+        //inizializzazione dimensioni Interazioni
+
+
+        InterazioniCap3.getPortaBack().setSize(27,46);
+        InterazioniCap3.getMacchina().setSize(14,25);
+        InterazioniCap3.getCestino().setSize(9,10);
+        InterazioniCap3.getDottore().setSize(14,19);
+        InterazioniCap3.getComputer().setSize(8,5);
+        InterazioniCap3.getPatataInterazione().setSize(5,4);
+        pgTest.setSize(16,22);
 
 
         //imposto posizioni interazioni
 
+        InterazioniCap3.getPortaBack().setPosition(82,20);
+        InterazioniCap3.getMacchina().setPosition(30,26);
+        InterazioniCap3.getPatataInterazione().setPosition(63.5f,34.5f);
+        InterazioniCap3.getCestino().setPosition(18,25);
+        InterazioniCap3.getDottore().setPosition(45,23);
+        InterazioniCap3.getComputer().setPosition(56,36);
+
+        pgTest.setPosition(66,18);
 
 
         final Group scena= new Group();
         //aggiungo interazioni alla scena
 
+        scena.addActor(pgTest);
+        scena.addActor(InterazioniCap3.getPortaBack());
+        scena.addActor(InterazioniCap3.getMacchina());
 
 
+        //investiga sul bug della patata fantasma
+        if(!InterazioniCap3.getPatataInterazione().isRimuovibile())
+        scena.addActor(InterazioniCap3.getPatataInterazione());
+
+        scena.addActor(InterazioniCap3.getCestino());
+        scena.addActor(InterazioniCap3.getDottore());
+        scena.addActor(InterazioniCap3.getComputer());
 
 
         //creo il menù che gestisce le interazioni con gli oggetti e il puzzle del capitolo
-        final Menu menu = new Menu(2,partita);
+        final Menu menu = new Menu(3,partita);
 
 
         scena.addCaptureListener(new InputListener(){
@@ -95,6 +113,9 @@ public class Capitolo3_2 implements Screen {
 
 
                 Interazione hit = null;
+
+
+
                 try {
                     hit = (Interazione) scena.hit(x, y, false); //hit rappresenta l'attore selezionato con un click
                 }catch (Exception ClassCastException){ }
@@ -104,6 +125,7 @@ public class Capitolo3_2 implements Screen {
                     //passo al menù l'interazione cliccata
                     menu.selezionaInterazione(hit);
 
+                    //da mettere in render?
                     if(menu.isRimuovibile(hit))
                         scena.removeActor(hit);
 
@@ -139,6 +161,8 @@ public class Capitolo3_2 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.2f, 0.6f, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
         camera.update();
         stage.act();
