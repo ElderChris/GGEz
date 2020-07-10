@@ -1,23 +1,18 @@
 package schermate;
 
-import WorldElement.Protagonista;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.MyGdxGame;
 
@@ -26,16 +21,12 @@ public class SchermataIniziale implements Screen {
   //  public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
 
     //inizializzi le texture da assegnare allo schermo
-    Texture texture1;
     Texture playButton;
-    SpriteBatch batch;
+
 
     BitmapFont font;
     public String nomegiocatore="";
     MyGdxGame partita;
-    TextButton start;
-    Sprite lmao;
-    Sprite bottone;
     Stage stage;
     TextField spaziotesto;
     OrthographicCamera camera;
@@ -116,22 +107,6 @@ public class SchermataIniziale implements Screen {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
 
-        //LA PARTE DI SOTTO NON LA USEREMO PERCHÈ LO FA GIà  lo stage
-        //inizia a visualizzare texture immagini eccetera
-   /*     partita.batch.begin();
-
-
-        partita.batch.draw(lmao, lmao.getX(),lmao.getY(),200,200);
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            this.dispose();
-            partita.setScreen(new Schermata(partita));
-        }
-        //oggetto per l'utilizzo di font personalizzati
-        GlyphLayout fontLayout = new GlyphLayout(font,"LMAOO");
-        font.draw(partita.batch,fontLayout,Gdx.graphics.getWidth()/2-fontLayout.width/2,Gdx.graphics.getHeight()-fontLayout.height-40);
-
-        partita.batch.end();
-    */
     }
 
     @Override

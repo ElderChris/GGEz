@@ -3,7 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import schermate.Schermata;
 import schermate.SchermataIniziale;
 
 public class MyGdxGame extends Game {

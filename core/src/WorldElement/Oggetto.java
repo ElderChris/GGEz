@@ -1,28 +1,20 @@
 package WorldElement;
 
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.MyGdxGame;
+
 
 public class Oggetto extends Image {
 
 private Texture icon;
-private String descrizione;
+private String descrizione; //ciò che appare graficamente nell'inventario
 private String idCombinazione; //se l'id è uguale allora si possono combinare
-private String idPuzzle;
+private String idPuzzle;        //id utile al controllo se il puzzle è stato risolto
 private boolean combinabile;
-private boolean combinato; //per far sparire gli oggetti che hai usato per combinare
-private boolean selezionato; //per ricordarsi gli ultimi 2 oggetti selezionati per la combinazione
+private boolean combinato; //variabile non più utilizzata
+private boolean selezionato; //variabile non più utilizzata
     private boolean raccolto;
 
 

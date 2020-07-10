@@ -3,6 +3,7 @@ package WorldElement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import static schermate.Capitolo1.nomegiocatore;
 
 public class InterazioniCap2 {
 //in questa classe vengono salvate le interazioni del capitolo 2, in modo tale che vengano caricate una volta e nello spostamento dei livelli i loro stati non vengano persi.
@@ -50,90 +51,137 @@ public class InterazioniCap2 {
 
     static String[] stringaUsaSentiero = new String[]{""};
 
-    static String[] stringaOsservaPorta = new String[] {""
+    static String[] stringaOsservaPorta = new String[] {"Una porta nel bel mezzo della\n" +
+            "foresta? Strano",
 
+            "Sembra quasi di essere in un sogno",
     };
 
-    static String[] stringaUsaPorta= new String[] {""
+    static String[] stringaUsaPorta= new String[] {"In teoria quella porta (lol) porta\n" +
+            "alla stanza in ospedale",
 
+            "Non ho molta nostalgia di quella\n" +
+                    "stanza in realtà",
     };
 
+    static String[] stringaOsservaCartelloDx= new String[] {"'Per me si va ne la città dolente'",
 
-    static String[] stringaOsservaCartelloDx= new String[] {""
-
-    };
-
-
-    static String[] stringaOsservaCartelloSx= new String[] {""
-
-    };
-
-
-    static String[] stringaUsaCartelloSx= new String[] {""
-
+            "Non proprio rassicurante"
     };
 
 
-    static String[] stringaOsservaAlberoDx= new String[] {""
+    static String[] stringaOsservaCartelloSx= new String[] {"'per me si va ne l'etterno dolore'",
 
-    };
-
-
-    static String[] stringaOsservaAlberoSx= new String[] {""
+            "Ok, penso che abbiano capito tutti\n" +
+                    "la citazione"
 
     };
 
 
-    static String[] stringaOsservaSandbox= new String[] {""
+    static String[] stringaOsservaSandbox= new String[] {"Sembra uno di quei box\n" +
+            "con la sabbia dove giocano\n" +
+            "i bambini",
 
+            "Molto americana come cosa",
+
+            "Magari qualche bambino ha\n" +
+                    "lasciato qualcosa di utile"
     };
 
 
-    static String[] stringaRaccogliSandbox= new String[] {""
-
+    static String[] stringaRaccogliSandbox= new String[] {"Guarda un po', non mi \n sbagliavo",
+            "La prendo, puo' sempre servire\n" +
+                    "un'arma"
     };
 
 
-    static String[] stringaOsservaLume= new String[] {""
+    static String[] stringaOsservaLume= new String[] {"Quel fiore somiglia a quello\n" +
+            "di una favola che mi raccontarono\n" +
+            "da piccolo",
 
+            "Si dice che avveri il tuo\n" +
+                    "desiderio più profondo"
     };
 
 
-    static String[] stringaUsaLume= new String[] {""
+    static String[] stringaUsaLume= new String[] {"Purtroppo è troppo in alto\n" +
+            "e troppo intricato nelle frasche",
 
+            "quindi dovro continuare a studiare\n" +
+                    "per potermi laureare"
     };
 
 
-    static String[] stringaParlaBimbo= new String[] {"Gongaga" ," lmao"
+    static String[] stringaParlaBimbo= new String[] {"*Sigh....Sigh" ,
+
+            "Ho lanciato troppo in lontano\n" +
+                    "il pallone",
+
+            "Chissà dove sarà finito"
+    };
+
+    static String[] stringaParlaPuzzleRisolto= new String[] {"Hai ritrovato la mia palla!!!\n" +
+            "Come ti chiami?",
+
+            "Oh "+nomegiocatore+ " !" +" Che bel nome!\n" +
+                    "Ti ringrazio per avermi aiutato",
+
+            "Dovresti andare al laboratorio\n" +
+                    "del professore lui sa sempre cosa\n" +
+                    "fare con i 'forestieri' come te"
 
     };
 
-    static String[] stringaParlaPuzzleRisolto= new String[] {"hai l'oggetto che cerco"
+    static String[] stringaOsservaSentiero = new String[] {"La strada sembra continuare da qui!",
 
+            "In ogni caso se volessi proseguire\n" +
+                    "dovrei USARE di più e OSSERVARE\n" +
+                    "di meno"
     };
 
-    static String[] stringaOsservaSentiero = new String[] {""
+
+
+    static String[] stringaOsservaAlbero = new String[] {"Beh, che dire, gran bell'albero!"};
+
+    static String[] stringaOsservaPallone = new String[] {"Hey ma c'è un pallone lì!",
+
+            "Quel bambino ha fatto un\n" +
+                    "lancio bello forte",
+
+            "Devo trovare il modo di\n" +
+                    "recuperarlo"
     };
 
+    static String[] stringaOsservaCartello = new String[] {"Sembrerebbe indicare un sentiero",
+            "Chissà dove porta...\n"
+            };
 
+    static String[] stringaUsaCartello = new String[] {"Non posso andarmene \n senza prima aver aiutato \n quel bambino...", "potrebbe darmi qualche \n informazione utile"};
 
-    static String[] stringaOsservaAlbero = new String[] {" "};
-
-    static String[] stringaOsservaPallone = new String[] {""};
-
-   static String[] stringaOsservaCartello = new String[] {""};
-
-    static String[] stringaUsaCartello = new String[] {""};
-
-    static String[] stringaOsservaCartelloBack = new String[] {""};
+    static String[] stringaOsservaCartelloBack = new String[] {"Proseguendo da qui \n si torna indietro"};
 
     static String[] stringaUsaCartelloBack = new String[] {""};
 
-    static String[] stringaOsservaRocce = new String[] {"le rocce"};
+    static String[] stringaOsservaRocce = new String[] {"Un cumulo di rocce...",
 
-    static String[] stringaRaccogliRocce = new String[] {""};
+            "Magari mi potrei portare\n" +
+                    "a casa un souvenir",
 
-    static String[] stringaRaccogliPallone = new String[] {""};
+            "Ammesso che riesca a tornarci",
+    };
+
+    static String[] stringaRaccogliRocce = new String[] {"Sarà divertente poter dire:\n" +
+            "'Hey! questa roccia l'ho presa\n" +
+            "da un posto sconosciuto in cui\n" +
+            "mi sono svegliato una volta'"
+    };
+
+    static String[] stringaRaccogliPallone = new String[] {"È troppo in alto!",
+
+            "Sarà meglio trovare un modo per\n" +
+                    "farlo cadere\n"
+
+    };
 
 
 
@@ -161,8 +209,7 @@ public class InterazioniCap2 {
 
     private static Interazione sabbia = new Interazione(stringaOsservaSandbox,sandbox,reactionNeutralTexture,reactionSurprisedTexture,stringaRaccogliSandbox,fiondaScarica);
 
-
-    private static Interazione fiore = new Interazione("luce",lume,stringaOsservaLume,stringaUsaLume,reactionHappyTexture,reactionSurprisedTexture);
+    private static Interazione fiore = new Interazione("luce",lume,stringaOsservaLume,stringaUsaLume,reactionHappyTexture,reactionSadTexture);
 
 
     private static   Interazione puntoLuce = new Interazione("travelPointForest",texturepuntoDiLuce,stringaOsservaSentiero,stringaUsaSentiero,reactionScaredTexture,reactionNeutralTexture);

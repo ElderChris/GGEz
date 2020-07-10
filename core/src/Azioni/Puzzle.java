@@ -2,11 +2,9 @@ package Azioni;
 
 import WorldElement.Interazione;
 import WorldElement.Oggetto;
-import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
 import schermate.*;
 
-import java.util.ArrayList;
 
 import static Azioni.Inventario.getLista;
 

@@ -46,7 +46,7 @@ public class Capitolo2_2 implements Screen {
         stage = new Stage(new StretchViewport(WORLD_WIDTH,WORLD_HEIGHT,camera));
         font= new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
-        Image sfondo = new Image(new Texture(Gdx.files.internal("forest2_base.png")));
+        Image sfondo = new Image(new Texture(Gdx.files.internal("foresta2_baseFix.png")));
         sfondo.setSize(WORLD_WIDTH,WORLD_HEIGHT);
         sfondo.setTouchable(Touchable.enabled);
 
@@ -61,27 +61,26 @@ public class Capitolo2_2 implements Screen {
         //inizializzazione dimensioni Interazioni
 
 
+        InterazioniCap2.getAlberoGigante().setSize(13,23.5f);
 
-        InterazioniCap2.getAlberoGigante().setSize(10,10);
+        InterazioniCap2.getCartelloTravel().setSize(17,18);
 
-        InterazioniCap2.getCartelloTravel().setSize(10,10);
+        InterazioniCap2.getCartelloBack().setSize(14,14);
 
-        InterazioniCap2.getCartelloBack().setSize(10,10);
-
-        InterazioniCap2.getPalloneIncastrato().setSize(10,10);
+        InterazioniCap2.getPalloneIncastrato().setSize(10,12);
 
         InterazioniCap2.getCumuloRocce().setSize(10,10);
 
 
 
         //imposto posizioni interazioni
-        InterazioniCap2.getAlberoGigante().setPosition(55,55);
-        InterazioniCap2.getCartelloTravel().setPosition(30,30);
-        InterazioniCap2.getCartelloBack().setPosition(40,40);
-        InterazioniCap2.getPalloneIncastrato().setPosition(50,50);
-        InterazioniCap2.getCumuloRocce().setPosition(70,70);
+        InterazioniCap2.getAlberoGigante().setPosition(28.05f,22);
+        InterazioniCap2.getCartelloTravel().setPosition(54.6f,27.4f);
+        InterazioniCap2.getCartelloBack().setPosition(79,20.5f);
+        InterazioniCap2.getPalloneIncastrato().setPosition(47,59.6f);
+        InterazioniCap2.getCumuloRocce().setPosition(15.25f,19);
 
-        pgTest.setPosition(45,67);
+        pgTest.setPosition(62,23);
 
 
 

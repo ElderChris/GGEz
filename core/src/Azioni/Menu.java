@@ -1,7 +1,7 @@
 package Azioni;
 
 import com.mygdx.game.MyGdxGame;
-import schermate.Capitolo1;
+
 import WorldElement.Interazione;
 
 import WorldElement.Combinazioni;
@@ -10,16 +10,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import schermate.Capitolo2;
-import schermate.SchermataIniziale;
 
-import java.util.ArrayList;
+import com.badlogic.gdx.utils.Align;
 import java.util.Iterator;
 
 import static Azioni.Inventario.getLista;
@@ -32,14 +26,11 @@ public class Menu extends Group  implements InputProcessor {
   public   Stage stage;
   public int capitoloAttuale;
 
-    //                         INIZIO BANCO PROVA
-    //Creo il bottone per selezionare il secondo materiale da combinare
     private Image plusButton;
     public boolean plus = false;
     public boolean combina = false;
     private boolean giaRaccolto = false;
     public Oggetto[] materialiCombinazione = {null, null};
-    //                          FINE BANCO PROVA
 
 
 
@@ -85,28 +76,7 @@ public class Menu extends Group  implements InputProcessor {
         getTable().padLeft(5);
 
 
-        //per debug
-      //  getTable().debugTable();
-      //  getTable().debug();
-      //  getTable().debugAll();
 
-
-      /*
-
-
-
-               X CAPITOLO2     -finire di implementare l'interazione con gli NPC (aggiungi bottone parla) il metodo Parla fa spuntare la stringa in base
-                                all'oggetto che hai e consegna l'oggetto all'npc, fatto questo viene messo in lista un oggetto invisibile
-                                che serve solo a sbloccare la porta per avanzare
-
-               X CAPITOLO2     -testare spostamento da un livello (dello stesso capitolo) all'altro grazie ad oggetto finto aggiunto alla lista ad ogni inzio livello
-                                    (stratagemma per cambiare livello usando il tasto USA visto che l'oggetto usato viene perso)
-                               -vedere alla funzione USA un modo per far sparire il pallone avendo la fionda (forse è meglio farlo dentro RACCOGLI )
-
-
-
-
-       */
          box = new Image(new Texture(Gdx.files.internal("box.png")));
 
          inventarioButton = new Image(new Texture(Gdx.files.internal("inventario.png")));
@@ -128,8 +98,6 @@ public class Menu extends Group  implements InputProcessor {
         parlaButton = new Image(new Texture(Gdx.files.internal("parla.png")));
 
 
-         Image testTable = new Image(new Texture(Gdx.files.internal("key.png")));
-         Image testTable2 = new Image(new Texture(Gdx.files.internal("key.png")));
 
 
 
@@ -349,7 +317,7 @@ public class Menu extends Group  implements InputProcessor {
 
 
     //ATTENZIONE: mi permette di cambiare gli stati degli oggetti? Si
-    //Si salva una copia dell'oggetto(NON È VERO) e crea il menù a seconda dell'oggetto interagibile
+    //crea il menù a seconda dell'oggetto interagibile
     public void selezionaInterazione(Interazione interazione){
         interazioneSelezionata= interazione;
 
@@ -605,80 +573,83 @@ public class Menu extends Group  implements InputProcessor {
 
 
     //La funzione combina genera il nuovo oggetto e rimuove i materiali dalla lista
-    //               Controllare eventuali crash
     private Oggetto combina(Oggetto[] materialiCombinazione){
         Oggetto oggetto = null;
-    //    labelOgg.setVisible(true);
-       // labelOgg.setText("Combina " + materialiCombinazione[0].getDescrizione() + " con " + materialiCombinazione[1].getDescrizione());
         if (!materialiCombinazione[0].getIdCombinazione().equals("X")) {
             if (!materialiCombinazione[1].getIdCombinazione().equals("X")) {
                 if (materialiCombinazione[1].getIdCombinazione().equals(materialiCombinazione[0].getIdCombinazione())){
-                    switch (materialiCombinazione[0].getIdCombinazione()) {
-                        case "test":
-                            Iterator<Oggetto> it = getLista().iterator();
-                            while (it.hasNext()) {
-                                Oggetto ogg = it.next();
-                                if (ogg.getIdCombinazione().equals("test")) {
-                                    it.remove();
-                                    getTable().removeActor(ogg);
-                                }
-                            }
-                            oggetto = Combinazioni.prova;
-                            break;
+                    if(!materialiCombinazione[1].equals(materialiCombinazione[0])) {
 
-                        case "fiondaCarica":
-                             it = getLista().iterator();
-                            while (it.hasNext()) {
-                                Oggetto ogg = it.next();
-                                if (ogg.getIdCombinazione().equals("fiondaCarica")) {
-                                    it.remove();
-                                    getTable().removeActor(ogg);
+                        switch (materialiCombinazione[0].getIdCombinazione()) {
+                            case "test":
+                                Iterator<Oggetto> it = getLista().iterator();
+                                while (it.hasNext()) {
+                                    Oggetto ogg = it.next();
+                                    if (ogg.getIdCombinazione().equals("test")) {
+                                        it.remove();
+                                        getTable().removeActor(ogg);
+                                    }
                                 }
-                            }
-                            oggetto = Combinazioni.fiondaCarica;
-                            break;
+                                oggetto = Combinazioni.prova;
+                                break;
 
-                        case "potatoChip":
-                            it = getLista().iterator();
-                            while (it.hasNext()){
-                                Oggetto ogg= it.next();
-                                if(ogg.getIdCombinazione().equals("potatoChip")){
-                                    it.remove();
-                                    getTable().removeActor(ogg);
+                            case "fiondaCarica":
+                                it = getLista().iterator();
+                                while (it.hasNext()) {
+                                    Oggetto ogg = it.next();
+                                    if (ogg.getIdCombinazione().equals("fiondaCarica")) {
+                                        it.remove();
+                                        getTable().removeActor(ogg);
+                                    }
                                 }
-                            }
-                            oggetto = Combinazioni.potatoChip;
-                            break;
+                                oggetto = Combinazioni.fiondaCarica;
+                                break;
 
-                        case "potatoOs":
-                            it = getLista().iterator();
-                            while (it.hasNext()){
-                                Oggetto ogg= it.next();
-                                if(ogg.getIdCombinazione().equals("potatoOs")){
-                                    it.remove();
-                                    getTable().removeActor(ogg);
+                            case "potatoChip":
+                                it = getLista().iterator();
+                                while (it.hasNext()) {
+                                    Oggetto ogg = it.next();
+                                    if (ogg.getIdCombinazione().equals("potatoChip")) {
+                                        it.remove();
+                                        getTable().removeActor(ogg);
+                                    }
                                 }
-                            }
-                            oggetto = Combinazioni.potatoOs;
-                            break;
+                                oggetto = Combinazioni.potatoChip;
+                                break;
 
-                        case "chargedPotato":
-                            it = getLista().iterator();
-                            while (it.hasNext()){
-                                Oggetto ogg= it.next();
-                                if(ogg.getIdCombinazione().equals("chargedPotato")){
-                                    it.remove();
-                                    getTable().removeActor(ogg);
+                            case "potatoOs":
+                                it = getLista().iterator();
+                                while (it.hasNext()) {
+                                    Oggetto ogg = it.next();
+                                    if (ogg.getIdCombinazione().equals("potatoOs")) {
+                                        it.remove();
+                                        getTable().removeActor(ogg);
+                                    }
                                 }
-                            }
-                            oggetto = Combinazioni.potatoCarica;
-                            break;
+                                oggetto = Combinazioni.potatoOs;
+                                break;
 
-                        default:
-                            Gdx.app.log("ERRORE", " ");
-                            labelOgg.setText("Per logica, sceglierei prima un oggetto ");
-                            break;
-                    }
+                            case "chargedPotato":
+                                it = getLista().iterator();
+                                while (it.hasNext()) {
+                                    Oggetto ogg = it.next();
+                                    if (ogg.getIdCombinazione().equals("chargedPotato")) {
+                                        it.remove();
+                                        getTable().removeActor(ogg);
+                                    }
+                                }
+                                oggetto = Combinazioni.potatoCarica;
+                                break;
+
+                            default:
+                                Gdx.app.log("ERRORE", " ");
+                                labelOgg.setText("Per logica, sceglierei prima un oggetto ");
+                                break;
+
+                        }
+                    }else
+                        labelOgg.setText("Non sembra una cosa intelligente");
+
                 }else
                     labelOgg.setText("Non sembra una cosa intelligente");
             }else
@@ -730,10 +701,6 @@ public class Menu extends Group  implements InputProcessor {
     return interazioneSelezionata.isRimuovibile();
     }
 
-    private void nextLevel(){
-        partita.setScreen(new Capitolo2(partita));
-        stage.dispose();
-    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
